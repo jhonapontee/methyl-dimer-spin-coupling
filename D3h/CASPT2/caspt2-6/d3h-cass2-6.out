@@ -1,0 +1,2904 @@
+
+                                 *****************
+                                 * O   R   C   A *
+                                 *****************
+
+                                            #,                                       
+                                            ###                                      
+                                            ####                                     
+                                            #####                                    
+                                            ######                                   
+                                           ########,                                 
+                                     ,,################,,,,,                         
+                               ,,#################################,,                 
+                          ,,##########################################,,             
+                       ,#########################################, ''#####,          
+                    ,#############################################,,   '####,        
+                  ,##################################################,,,,####,       
+                ,###########''''           ''''###############################       
+              ,#####''   ,,,,##########,,,,          '''####'''          '####       
+            ,##' ,,,,###########################,,,                        '##       
+           ' ,,###''''                  '''############,,,                           
+         ,,##''                                '''############,,,,        ,,,,,,###''
+      ,#''                                            '''#######################'''  
+     '                                                          ''''####''''         
+             ,#######,   #######,   ,#######,      ##                                
+            ,#'     '#,  ##    ##  ,#'     '#,    #''#        ,####,    ,#,          
+            ##       ##  ##   ,#'  ##            #'  '#       #'       ,# #          
+            ##       ##  #######   ##           ,######,      #####,      #          
+            '#,     ,#'  ##    ##  '#,     ,#' ,#      #,     #,   #      #          
+             '#######'   ##     ##  '#######'  #'      '#     '####' #    #          
+
+
+
+                #########################################################
+                #                        -***-                          #
+                #          Department of theory and spectroscopy        #
+                #                                                       #
+                #                      Frank Neese                      #
+                #                                                       #
+                #     Directorship, Architecture, Infrastructure        #
+                #                    SHARK, DRIVERS                     #
+                #        Core code/Algorithms in most modules           #
+                #                                                       #
+                #        Max Planck Institute fuer Kohlenforschung      #
+                #                Kaiser Wilhelm Platz 1                 #
+                #                 D-45470 Muelheim/Ruhr                 #
+                #                      Germany                          #
+                #                                                       #
+                #                  All rights reserved                  #
+                #                        -***-                          #
+                #########################################################
+
+
+                         Program Version 6.1.0  -  RELEASE   -
+                                (GIT: $679e74b$)
+                          ($2025-06-10 18:02:51 +0200$)
+
+
+ With contributions from (in alphabetic order):
+[Max-Planck-Institut fuer Kohlenforschung]                               
+  Daniel Aravena         : Magnetic Suceptibility                        
+  Michael Atanasov       : Ab Initio Ligand Field Theory (pilot matlab implementation)
+  Alexander A. Auer      : GIAO ZORA, VPT2 properties, NMR spectrum      
+  Ute Becker             : All parallelization in ORCA, NUMFREQ, NUMCALC 
+  Giovanni Bistoni       : ED, misc. LED, open-shell LED, HFLD           
+  Dmytro Bykov           : pre 5.0 version of the SCF Hessian            
+  Marcos Casanova-Páez   : Triplet and SCS-CIS(D). UHF-(DLPNO)-IP/EA/STEOM-CCSD. UHF-CVS-IP/STEOM-CCSD   
+  Vijay G. Chilkuri      : MRCI spin determinant printing, contributions to CSF-ICE 
+  Pauline Colinet        : FMM embedding                                 
+  Dipayan Datta          : RHF DLPNO-CCSD density                        
+  Achintya Kumar Dutta   : EOM-CC, STEOM-CC                              
+  Nicolas Foglia         : Exact transition moments, OPA infrastructure, MCD improvements    
+  Dmitry Ganyushin       : Spin-Orbit,Spin-Spin,Magnetic field MRCI      
+  Miquel Garcia-Rates    : C-PCM and meta-GGA Hessian, CCSD/C-PCM, Gaussian charge scheme 
+  Tiago L. C. Gouveia    : GS-ROHF, GS-ROCIS                             
+  Yang Guo               : DLPNO-NEVPT2, F12-NEVPT2, CIM, IAO-localization        
+  Andreas Hansen         : Spin unrestricted coupled pair/coupled cluster methods 
+  Ingolf Harden          : AUTO-CI MPn and infrastructure                
+  Benjamin Helmich-Paris : MC-RPA, TRAH-(SCF,CASSCF), AVAS, COSX integrals, SCF dyn. polar., MC-PDFT, srDFT 
+  Lee Huntington         : MR-EOM, pCC                                   
+  Robert Izsak           : Overlap fitted RIJCOSX, COSX-SCS-MP3, EOM     
+  Riya Kayal             : Wick's Theorem for AUTO-CI, AUTO-CI UHF-CCSDT 
+  Emily Kempfer          : AUTO-CI RHF CISDT and CCSDT, approximate NEVPT4
+  Christian Kollmar      : KDIIS, OOCD, Brueckner-CCSD(T), CCSD density, CASPT2, CASPT2-K, improved NEVPT2 
+  Axel Koslowski         : Symmetry handling                             
+  Simone Kossmann        : meta-GGA functionals, TD-DFT gradient, OOMP2, (MP2 Hessian; deprecated post 5.0) 
+  Lucas Lang             : DCDCAS, Hyperfine gauge corrections, ICE-SOC+SSC
+  Marvin Lechner         : AUTO-CI (C++ implementation), FIC-MRCC        
+  Spencer Leger          : CASSCF response                               
+  Dagmar Lenk            : GEPOL surface, SMD, ORCA-2-JSON               
+  Dimitrios Liakos       : Extrapolation schemes; Compound Job, Property file
+  Dimitrios Manganas     : Further ROCIS development; embedding schemes. LFT, Crystal Embedding 
+  Dimitrios Pantazis     : SARC Basis sets                               
+  Anastasios Papadopoulos: AUTO-CI, single reference methods and gradients 
+  Taras Petrenko         : pre 6.0 DFT Hessian and TD-DFT gradient,  ECA, NRVS 
+  Petra Pikulova         : Analytic Raman intensities                    
+  Peter Pinski           : DLPNO-MP2, DLPNO-MP2 Gradient                 
+  Shashank Vittal Rao    : ES-AILFT, MagRelax                            
+  Christoph Reimann      : Effective Core Potentials                     
+  Marius Retegan         : Local ZFS, SOC                                
+  Christoph Riplinger    : Optimizer, TS searches, QM/MM, DLPNO-CCSD(T), (RO)-DLPNO pert. Triples 
+  Michael Roemelt        : Original ROCIS implementation, recursive CI coupling coefficients
+  Masaaki Saitow         : Open-shell DLPNO-CCSD energy and density      
+  Barbara Sandhoefer     : DKH picture change effects                    
+  Yorick L. A. Schmerwitz: GMF and freeze-and-release deltaSCF, NEB S-IDPP initial path                    
+  Kantharuban Sivalingam : CASSCF convergence/infrastructure, NEVPT2, NEVPT3, NEVPT4(SD), FIC-MRCI and CEPA variants
+  Bernardo de Souza      : ESD, SOC TD-DFT                               
+  Georgi L. Stoychev     : AutoAux, RI-MP2 NMR, DLPNO-MP2 response, X2C  
+  Van Anh Tran           : RI-MP2 g-tensors                              
+  Willem Van den Heuvel  : Paramagnetic NMR                              
+  Zikuan Wang            : NOTCH, Electric field optimization            
+  Frank Wennmohs         : Technical directorship and infrastructure     
+  Hang Xu                : AUTO-CI-Response properties                   
+                                                                         
+[FACCTs GmbH]                                                            
+  Markus Bursch, Nicolas Foglia, Miquel Garcia-Rates, Ingolf Harden, Hagen Neugebauer, Anastasios Papadopoulos, 
+  Christoph Riplinger, Bernardo de Souza, Georgi L. Stoychev                                                    
+                                                                 
+  APM, various basis sets, CI-OPT, improved COSX, DLPNO-Multilevel,           
+  DOCKER, DRACO, updates on ESD, Fragmentator, GOAT, IRC, LR-CPCM, L-BFGS, MBIS, meta-GGA TD-DFT gradient, ML-optimized integration grids, 
+  MM, NACMEs, nearIR, NEB, NEB-TS, NL-DFT gradient (VV10), 2- and 3-layer-ONIOM, interface openCOSMO-RS, QMMM,   
+  Crystal-QMMM, RESP, rigid body optimization, SF, symmetry and pop. for TD-DFT, various functionals, SOLVATOR                                   
+                                                                         
+[Other institutions]                                                     
+  V. Asgeirsson          : NEB                                           
+  Christoph Bannwarth    : sTDA-DFT, sTD-DFT, PBEh-3c, B97-3c, D3        
+  Giovanni Bistoni       : ETS/NOCV, ADLD/ADEX, COVALED                  
+  Martin Brehm           : Molecular dynamics                            
+  Ronald Cardenas        : ETS/NOCV                                      
+  Martina Colucci        : COVALED                                       
+  Sebastian Ehlert       : rSCAN, r2SCAN, r2SCAN-3c, D4, dhf basis sets  
+  Marvin Friede          : D4 for Fr, Ra, Ac-Lr                          
+  Lars Goerigk           : TD-DFT with DH, B97 family of functionals     
+  Stefan Grimme          : VdW corrections, initial TS optimization, DFT functionals, gCP, sTDA/sTD-DF 
+  Waldemar Hujo          : DFT-NL                                        
+  H. Jonsson             : NEB                                           
+  Holger Kruse           : gCP                                           
+  Marcel Mueller         : wB97X-3c, vDZP basis set                      
+  Hagen Neugebauer       : wr2SCAN, Native XTB                           
+  Gianluca Regni         : ADLD/ADEX                                     
+  Tobias Risthaus        : pre 6.0 range-separated hybrid DFT and stability analysis
+  Lukas Wittmann         : regularized MP2, r2SCAN double-hybrids, wr2SCAN        
+                                                                         
+We gratefully acknowledge several colleagues who have allowed us to      
+interface, adapt or use parts of their codes:                            
+  Ed Valeev, F. Pavosevic, A. Kumar             : LibInt (2-el integral package), F12 methods 
+  Garnet Chan, S. Sharma, J. Yang, R. Olivares  : DMRG                   
+  Ulf Ekstrom                                   : XCFun DFT Library      
+  Mihaly Kallay                                 : mrcc  (arbitrary order and MRCC methods)
+  Frank Weinhold                                : gennbo (NPA and NBO analysis)           
+  Simon Mueller                                 : openCOSMO-RS                            
+  Christopher J. Cramer and Donald G. Truhlar   : smd solvation model                     
+  S Lehtola, MJT Oliveira, MAL Marques          : LibXC Library                           
+  Liviu Ungur et al                             : ANISO software                          
+
+
+ Your calculation uses the libint2 library for the computation of 2-el integrals
+ For citations please refer to: http://libint.valeyev.net
+
+ Your ORCA version has been built with support for libXC version: 7.0.0
+ For citations please refer to: https://libxc.gitlab.io
+
+ This ORCA versions uses:
+   CBLAS   interface :  Fast vector & matrix operations
+   LAPACKE interface :  Fast linear algebra routines
+   SCALAPACK package :  Parallel linear algebra routines
+   Shared memory     :  Shared parallel matrices
+   BLAS/LAPACK       :  OpenBLAS 0.3.29  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX SINGLE_THREADED
+        Core in use  :  SkylakeX
+   Copyright (c) 2011-2014, The OpenBLAS Project
+
+
+  ***********************************
+  * Starting time: Thu Dec 11 03:48:51 2025
+  * Host name:     Jhonnytest
+  * Process ID:    36901
+  * Working dir.:  /home/jhonapontee/Group-theory/Proyecto/D3h/CASPT2/caspt2-6
+  ***********************************
+
+================================================================================
+
+----- Orbital basis set information -----
+Your calculation utilizes the basis: def2-SVP
+   F. Weigend and R. Ahlrichs, Phys. Chem. Chem. Phys. 7, 3297 (2005).
+
+================================================================================
+                                        WARNINGS
+                       Please study these warnings very carefully!
+================================================================================
+
+
+WARNING: CASSCF multiplicity blocks not in descending order!
+       : This is important for any CASSCF property run ...
+ ===>  : Re-ordering the multiplicity blocks, nroots, irreps and alike!
+
+IMPORTANT NOTE: CASSCF must signal convergence for a subsequent CASPT2/NEVPT2! 
+                Set maxiter=1 to run CASPT2/NEVPT2 with arbitrary orbitals.
+
+
+================================================================================
+                                       INPUT FILE
+================================================================================
+NAME = caspt2.inp
+|  1> ! def2-SVP TightSCF
+|  2> ! CASSCF
+|  3> ! MORead
+|  4> 
+|  5> %moinp "d3h-triplete.gbw"
+|  6> 
+|  7> %casscf
+|  8>   nel  2          # 2 electrones activos
+|  9>   norb 6          # 6 orbitales activos (CAS(2,6))
+| 10>   mult 1,3        # Calcular bloques de Singulete y Triplete
+| 11>   nroots 1,1      # 1 raíz para cada multiplicidad
+| 12>   PTMethod FIC_CASPT2    
+| 13> end
+| 14> 
+| 15> 
+| 16> * xyz 0 3
+| 17> C   0.00000   0.00000  -1.75000
+| 18> H   1.08250   0.00000  -1.75000
+| 19> H  -0.54125   0.93740  -1.75000
+| 20> H  -0.54125  -0.93740  -1.75000
+| 21> C   0.00000   0.00000   1.75000
+| 22> H   1.08250   0.00000   1.75000
+| 23> H  -0.54125   0.93740   1.75000
+| 24> H  -0.54125  -0.93740   1.75000
+| 25> **                         ****END OF INPUT****
+================================================================================
+
+                       ****************************
+                       * Single Point Calculation *
+                       ****************************
+
+---------------------------------
+CARTESIAN COORDINATES (ANGSTROEM)
+---------------------------------
+  C      0.000000    0.000000   -1.750000
+  H      1.082500    0.000000   -1.750000
+  H     -0.541250    0.937400   -1.750000
+  H     -0.541250   -0.937400   -1.750000
+  C      0.000000    0.000000    1.750000
+  H      1.082500    0.000000    1.750000
+  H     -0.541250    0.937400    1.750000
+  H     -0.541250   -0.937400    1.750000
+
+----------------------------
+CARTESIAN COORDINATES (A.U.)
+----------------------------
+  NO LB      ZA    FRAG     MASS         X           Y           Z
+   0 C     6.0000    0    12.011    0.000000    0.000000   -3.307021
+   1 H     1.0000    0     1.008    2.045629    0.000000   -3.307021
+   2 H     1.0000    0     1.008   -1.022814    1.771429   -3.307021
+   3 H     1.0000    0     1.008   -1.022814   -1.771429   -3.307021
+   4 C     6.0000    0    12.011    0.000000    0.000000    3.307021
+   5 H     1.0000    0     1.008    2.045629    0.000000    3.307021
+   6 H     1.0000    0     1.008   -1.022814    1.771429    3.307021
+   7 H     1.0000    0     1.008   -1.022814   -1.771429    3.307021
+
+--------------------------------
+INTERNAL COORDINATES (ANGSTROEM)
+--------------------------------
+ C      0   0   0     0.000000000000     0.00000000     0.00000000
+ H      1   0   0     1.082500000000     0.00000000     0.00000000
+ H      1   2   0     1.082437214115   120.00191878     0.00000000
+ H      1   2   3     1.082437214115   120.00191878   180.00000000
+ C      1   2   3     3.500000000000    90.00000000   270.00000000
+ H      5   1   2     1.082500000000    90.00000000     0.00000000
+ H      5   1   2     1.082437214115    90.00000000   120.00191878
+ H      5   1   2     1.082437214115    90.00000000   239.99808122
+
+---------------------------
+INTERNAL COORDINATES (A.U.)
+---------------------------
+ C      0   0   0     0.000000000000     0.00000000     0.00000000
+ H      1   0   0     2.045628539970     0.00000000     0.00000000
+ H      1   2   0     2.045509891841   120.00191878     0.00000000
+ H      1   2   3     2.045509891841   120.00191878   180.00000000
+ C      1   2   3     6.614041468724    90.00000000   270.00000000
+ H      5   1   2     2.045628539970    90.00000000     0.00000000
+ H      5   1   2     2.045509891841    90.00000000   120.00191878
+ H      5   1   2     2.045509891841    90.00000000   239.99808122
+
+---------------------
+BASIS SET INFORMATION
+---------------------
+There are 2 groups of distinct atoms
+
+ Group   1 Type C   : 7s4p1d contracted to 3s2p1d pattern {511/31/1}
+ Group   2 Type H   : 4s1p contracted to 2s1p pattern {31/1}
+
+Atom   0C    basis set group =>   1
+Atom   1H    basis set group =>   2
+Atom   2H    basis set group =>   2
+Atom   3H    basis set group =>   2
+Atom   4C    basis set group =>   1
+Atom   5H    basis set group =>   2
+Atom   6H    basis set group =>   2
+Atom   7H    basis set group =>   2
+------------------------------------------------------------------------------
+                             ORCA STARTUP CALCULATIONS
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+                   ___                                                        
+                  /   \      - P O W E R E D   B Y -                         
+                 /     \                                                     
+                 |  |  |   _    _      __       _____    __    __             
+                 |  |  |  | |  | |    /  \     |  _  \  |  |  /  |          
+                  \  \/   | |  | |   /    \    | | | |  |  | /  /          
+                 / \  \   | |__| |  /  /\  \   | |_| |  |  |/  /          
+                |  |  |   |  __  | /  /__\  \  |    /   |      \           
+                |  |  |   | |  | | |   __   |  |    \   |  |\   \          
+                \     /   | |  | | |  |  |  |  | |\  \  |  | \   \       
+                 \___/    |_|  |_| |__|  |__|  |_| \__\ |__|  \__/        
+                                                                              
+                      - O R C A' S   B I G   F R I E N D -                    
+                                      &                                       
+                       - I N T E G R A L  F E E D E R -                       
+                                                                              
+ v1 FN, 2020, v2 2021, v3 2022-2024                                           
+------------------------------------------------------------------------------
+
+
+----------------------
+SHARK INTEGRAL PACKAGE
+----------------------
+
+Number of atoms                             ...      8
+Number of basis functions                   ...     58
+Number of shells                            ...     30
+Maximum angular momentum                    ...      2
+Integral batch strategy                     ... SHARK/LIBINT Hybrid
+RI-J (if used) integral strategy            ... SPLIT-RIJ (Revised 2003 algorithm where possible)
+Printlevel                                  ...      1
+Contraction scheme used                     ... SEGMENTED contraction
+Prescreening option                         ... SCHWARTZ
+   Thresh                                   ... 2.500e-11
+   Tcut                                     ... 2.500e-12
+   Tpresel                                  ... 2.500e-12 
+Coulomb Range Separation                    ... NOT USED
+Exchange Range Separation                   ... NOT USED
+Multipole approximations                    ... NOT USED
+Finite Nucleus Model                        ... NOT USED
+CABS basis                                  ... NOT available
+Auxiliary Coulomb fitting basis             ... NOT available
+Auxiliary J/K fitting basis                 ... NOT available
+Auxiliary Correlation fitting basis         ... NOT available
+Auxiliary 'external' fitting basis          ... NOT available
+
+Checking pre-screening integrals            ... done (  0.0 sec) Dimension = 30
+   => SHARK Basis and OBASIS are compatible. Storing Pre-screening
+Shell pair information
+Shell pair cut-off parameter TPreSel        ...   2.5e-12
+Total number of shell pairs                 ...       465
+Shell pairs after pre-screening             ...       458
+Total number of primitive shell pairs       ...      1529
+Primitive shell pairs kept                  ...      1254
+          la=0 lb=0:    170 shell pairs
+          la=1 lb=0:    174 shell pairs
+          la=1 lb=1:     55 shell pairs
+          la=2 lb=0:     36 shell pairs
+          la=2 lb=1:     20 shell pairs
+          la=2 lb=2:      3 shell pairs
+
+Checking whether 4 symmetric matrices of dimension 58 fit in memory
+:Max Core in MB      =   4096.00
+ MB in use           =      1.76
+ MB left             =   4094.24
+ MB needed           =      0.05
+ Data fit in memory  = YES
+Calculating Nuclear repulsion               ... done (  0.0 sec) ENN=     31.188823454856 Eh
+
+Diagonalization of the overlap matrix:
+Smallest eigenvalue                        ... 1.896e-02
+Time for diagonalization                   ...    0.001 sec
+Threshold for overlap eigenvalues          ... 1.000e-07
+Number of eigenvalues below threshold      ... 0
+Time for construction of square roots      ...    0.000 sec
+Total time needed                          ...    0.001 sec
+
+-------------------
+DFT GRID GENERATION
+-------------------
+
+General Integration Accuracy     IntAcc      ... 4.388
+Radial Grid Type                 RadialGrid  ... OptM3 with GC (2021)
+Angular Grid (max. ang.)         AngularGrid ... 4 (Lebedev-302)
+Angular grid pruning method      GridPruning ... 4 (adaptive)
+Weight generation scheme         WeightScheme... mBecke (2022)
+Basis function cutoff            BFCut       ... 1.0000e-11
+Integration weight cutoff        WCut        ... 1.0000e-14
+Partially contracted basis set               ... off
+Rotationally invariant grid construction     ... off
+Angular grids for H and He will be reduced by one unit
+
+Total number of grid points                  ...    31956
+Total number of batches                      ...      504
+Average number of points per batch           ...       63
+Average number of grid points per atom       ...     3994
+Grids setup in   0.1 sec
+Initializing property integral containers    ... done (  0.0 sec)
+
+SHARK setup successfully completed in   0.1 seconds
+
+Maximum memory used throughout the entire STARTUP-calculation: 11.4 MB
+-------------------------------------------------------------------------------
+                                 ORCA GUESS
+                   Start orbitals & Density for SCF / CASSCF
+-------------------------------------------------------------------------------
+
+------------
+SCF SETTINGS
+------------
+Hamiltonian:
+ Ab initio Hamiltonian  Method          .... Hartree-Fock(GTOs)
+
+
+General Settings:
+ Integral files         IntName         .... caspt2
+ Hartree-Fock type      HFTyp           .... CASSCF
+ Total Charge           Charge          ....    0
+ Multiplicity           Mult            ....    3
+ Number of Electrons    NEL             ....   18
+ Basis Dimension        Dim             ....   58
+ Nuclear Repulsion      ENuc            ....     31.1888234549 Eh
+
+---------------------
+INITIAL GUESS: MOREAD
+---------------------
+Guess MOs are being read from file: d3h-triplete.gbw
+Input Geometry matches current geometry (good)
+Input basis set matches current basis set (good)
+Occupation numbers will be reassigned to an Aufbau configuration
+MOs were renormalized
+Gram-Schmidt orthogonalization of all MOs with pivot on actives
+                      ------------------
+                      INITIAL GUESS DONE (   0.0 sec)
+                      ------------------
+             **** ENERGY FILE WAS UPDATED (caspt2.en.tmp) ****
+Finished Guess after   0.0 sec
+Maximum memory used throughout the entire GUESS-calculation: 4.2 MB
+-------------------------------------------------------------------------------
+                              ORCA-CASSCF
+-------------------------------------------------------------------------------
+
+Building the CAS space              ... done (15 configurations for Mult=3)
+Building the CAS space              ... done (21 configurations for Mult=1)
+Memory for address arrays  		      ... done
+Make address arrays			      ... done
+Memory for buffers 			      ... done
+Setting up spin-function prototypes	      ... (MAXOPEN=2) 2 4 done
+Trivial cases - DOMO's			      ... done (  0.0 MB)
+Number of open shells			    ...  2
+domo->virtual excitations			... done (  0.0 MB)
+domo->somo excitations				... done (  0.0 MB)
+somo->virtual excitations			... done (  0.0 MB)
+somo->somo excitations				... done (  0.0 MB)
+Coupling container construction done
+Memory for address arrays  		      ... done
+Make address arrays			      ... done
+Memory for buffers 			      ... done
+Setting up spin-function prototypes	      ... (MAXOPEN=2) 0 2 4 done
+Trivial cases - DOMO's			      ... done (  0.0 MB)
+Number of open shells			    ...  0
+domo->virtual excitations			... done (  0.0 MB)
+domo->somo excitations				... done (  0.0 MB)
+somo->virtual excitations			... done (  0.0 MB)
+somo->somo excitations				... done (  0.0 MB)
+Number of open shells			    ...  2
+domo->virtual excitations			... done (  0.0 MB)
+domo->somo excitations				... done (  0.0 MB)
+somo->virtual excitations			... done (  0.0 MB)
+somo->somo excitations				... done (  0.0 MB)
+Coupling container construction done
+
+ CASSCF (estimated) memory needed     ... 0.3 MB
+ CASPT2 (estimated) memory needed     ... 2.7 MB 
+
+
+SYSTEM-SPECIFIC SETTINGS:
+Number of active electrons          ...    2
+Number of active orbitals           ...    6
+Total number of electrons           ...   18
+Total number of orbitals            ...   58
+
+Determined orbital ranges:
+   Internal       0 -    7 (   8 orbitals)
+   Active         8 -   13 (   6 orbitals)
+   External      14 -   57 (  44 orbitals)
+Number of rotation parameters      ...    664
+
+CI-STEP:
+CI strategy                         ... General CI
+Number of multiplicity blocks       ...    2
+BLOCK  0 WEIGHT=   0.5000
+  Multiplicity                      ...    3
+  #(Configurations)                 ...   15
+  #(CSFs)                           ...   15
+  #(Roots)                          ...    1
+    ROOT=0 WEIGHT=    0.500000
+
+BLOCK  1 WEIGHT=   0.5000
+  Multiplicity                      ...    1
+  #(Configurations)                 ...   21
+  #(CSFs)                           ...   21
+  #(Roots)                          ...    1
+    ROOT=0 WEIGHT=    0.500000
+
+  PrintLevel                        ...    1
+  N(GuessMat)                       ...      2048
+  MaxDim(CI)                        ...        10
+  MaxIter(CI)                       ...        64
+  Energy Tolerance CI               ...  2.50e-09
+  Residual Tolerance CI             ...  2.50e-09
+  Shift(CI)                         ...  1.00e-04
+
+INTEGRAL-TRANSFORMATION-STEP:
+  Algorithm                         ... EXACT
+
+ORBITAL-IMPROVEMENT-STEP:
+  Algorithm                         ... SuperCI(PT)
+  Default Parametrization           ... CAYLEY
+  Act-Act rotations                 ... depends on algorithm used
+
+  Note: SuperCI(PT) will ignore FreezeIE, FreezeAct and FreezeGrad. In general Default settings are encouraged.
+        In conjunction with ShiftUp, ShiftDn or GradScaling the performance of SuperCI(PT) is less optimal.  
+
+  MaxRot                            ... 2.00e-01 
+  Max. no of vectors (DIIS)         ... 15
+  DThresh (cut-off) metric          ... 1.00e-06
+  Switch step at gradient           ...  3.00e-02 
+  Switch step at iteration          ...        50   
+  Switch step to                    ... SuperCI(PT)    
+
+SCF-SETTINGS:
+  Incremental                       ... on
+  RIJCOSX approximation             ... off
+  RI-JK approximation               ... off
+  AO integral handling              ... DIRECT
+  Integral Neglect Thresh           ...  2.50e-11
+  Primitive cutoff TCut             ...  2.50e-12
+  Energy convergence tolerance      ...  2.50e-08
+  Orbital gradient convergence      ...  2.50e-04
+  Max. number of iterations         ...        75  
+
+PT2-SETTINGS:
+  A PT2 calculation will be performed on top of the CASSCF wave function (PT2 = CASPT2)   
+  CASPT2 Real Levelshift            ...  0.00e+00
+  CASPT2 Im.  Levelshift            ...  0.00e+00
+  CASPT2 IPEA Levelshift            ...  0.00e+00
+ CI step strategy                   ... General CI
+  D4C handling                      ... PS approximation (factorized) 
+  CI truncation for D4C at          ...  1.00e-12
+  CI truncation for D3  at          ...  1.00e-14
+  Orbitals                          ... canonical for each state 
+  Last  frozen  orbital             ... 1
+  First deleted orbital             ... 58
+
+FINAL ORBITALS:
+  Active   Orbitals                 ... natural 
+  Internal Orbitals                 ... canonical 
+  External Orbitals                 ... canonical 
+
+------------------
+CAS-SCF ITERATIONS
+------------------
+
+
+MACRO-ITERATION   1: 
+   --- Inactive Energy E0 = -78.17418059 Eh
+CI-ITERATION   0: 
+   -79.040605005   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.045600700   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+
+                 <<<<<<<<<<<<<<<<<<INITIAL CI STATE CHECK>>>>>>>>>>>>>>>>>>
+
+BLOCK  0 MULT= 3 NROOTS= 1 
+ROOT   0:  E=     -79.0406050047 Eh
+      0.99996 [     0]: 110000
+
+BLOCK  1 MULT= 1 NROOTS= 1 
+ROOT   0:  E=     -79.0456006996 Eh
+      0.62751 [     0]: 200000
+      0.37239 [     6]: 020000
+
+                 <<<<<<<<<<<<<<<<<<INITIAL CI STATE CHECK>>>>>>>>>>>>>>>>>>
+
+   E(CAS)=   -79.043102852 Eh DE=    0.000000e+00
+   --- Energy gap subspaces: Ext-Act = 0.040   Act-Int = 0.437
+   N(occ)=  1.12750 0.87243 0.00001 0.00005 0.00000 0.00000
+   ||g|| =     5.547293e-01 Max(G)=   -1.603505e-01 Rot=23,1
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      1.634321320 Max(X)(22,10) =     -1.127271822 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION   2: 
+   --- Inactive Energy E0 = -78.13120708 Eh
+CI-ITERATION   0: 
+   -79.054502716   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.058934925   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.056718821 Eh DE=   -1.361597e-02
+   --- Energy gap subspaces: Ext-Act = -0.058   Act-Int = 0.428
+   N(occ)=  1.12521 0.87457 0.00009 0.00013 0.00000 0.00000
+   ||g|| =     1.265918e-01 Max(G)=    2.747964e-02 Rot=13,5
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.828267090 Max(X)(21,11) =     -0.561961645 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION   3: 
+   --- Inactive Energy E0 = -78.15025673 Eh
+CI-ITERATION   0: 
+   -79.055485673   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060096600   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057791136 Eh DE=   -1.072316e-03
+   --- Energy gap subspaces: Ext-Act = -0.160   Act-Int = 0.431
+   N(occ)=  1.12741 0.87243 0.00006 0.00010 0.00000 0.00000
+   ||g|| =     2.218047e-02 Max(G)=    7.564876e-03 Rot=23,2
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.453766923 Max(X)(17,11) =      0.287044555 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION   4: 
+   --- Inactive Energy E0 = -78.14408919 Eh
+CI-ITERATION   0: 
+   -79.055544453   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060067484   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057805969 Eh DE=   -1.483211e-05
+   --- Energy gap subspaces: Ext-Act = -0.268   Act-Int = 0.430
+   N(occ)=  1.12671 0.87304 0.00011 0.00014 0.00000 0.00000
+   ||g|| =     2.743530e-02 Max(G)=   -8.429120e-03 Rot=11,3
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.284314676 Max(X)(16,10) =      0.210404093 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION   5: 
+   --- Inactive Energy E0 = -78.14957043 Eh
+CI-ITERATION   0: 
+   -79.055564008   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060165411   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057864709 Eh DE=   -5.874085e-05
+   --- Energy gap subspaces: Ext-Act = -0.341   Act-Int = 0.430
+   N(occ)=  1.12852 0.87129 0.00008 0.00011 0.00000 0.00000
+   ||g|| =     1.091809e-02 Max(G)=    4.021710e-03 Rot=11,3
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.418431457 Max(X)(20,10) =      0.287326214 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION   6: 
+   --- Inactive Energy E0 = -78.14416086 Eh
+CI-ITERATION   0: 
+   -79.055558190   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060089201   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057823695 Eh DE=    4.101422e-05
+   --- Energy gap subspaces: Ext-Act = -0.304   Act-Int = 0.429
+   N(occ)=  1.12715 0.87258 0.00012 0.00015 0.00000 0.00000
+   ||g|| =     2.704228e-02 Max(G)=   -6.617921e-03 Rot=11,3
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.479810379 Max(X)(14,10) =      0.335151430 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION   7: 
+   --- Inactive Energy E0 = -78.14742870 Eh
+CI-ITERATION   0: 
+   -79.055567636   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060137801   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057852718 Eh DE=   -2.902331e-05
+   --- Energy gap subspaces: Ext-Act = -0.282   Act-Int = 0.430
+   N(occ)=  1.12686 0.87294 0.00009 0.00012 0.00000 0.00000
+   ||g|| =     7.424684e-03 Max(G)=    3.196720e-03 Rot=16,8
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.246802606 Max(X)(16,10) =     -0.165876966 
+   --- SFit(Active Orbitals)
+   --- Failed to constrain active orbitals due to rotations:
+       Rot( 10, 22) with OVL=0.615468
+       Rot( 11, 21) with OVL=0.523327
+   --- SFit: squared overlap of the active orbitals QMAT=C*CT
+                  0          1          2          3          4          5    
+      0       0.999908   0.000000  -0.004591   0.000000  -0.000005   0.000000
+      1       0.000000   0.999921   0.000000  -0.006217   0.000000   0.000000
+      2      -0.004591   0.000000   0.403291   0.000000  -0.000281   0.000000
+      3       0.000000  -0.006217   0.000000   0.441398   0.000000   0.000000
+      4      -0.000005   0.000000  -0.000281   0.000000   0.999997   0.000000
+      5       0.000000   0.000000   0.000000   0.000000   0.000000   0.999997
+
+   --- Warning: Active Space composition changed by more than 50% in this iteration. 
+                Maybe it will fix itself: Final composition should be checked
+
+MACRO-ITERATION   8: 
+   --- Inactive Energy E0 = -78.15133883 Eh
+CI-ITERATION   0: 
+   -79.055454219   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060025157   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057739688 Eh DE=    1.130302e-04
+   --- Energy gap subspaces: Ext-Act = -0.602   Act-Int = 0.432
+   N(occ)=  1.12395 0.87584 0.00010 0.00012 0.00000 0.00000
+   ||g|| =     3.141580e-02 Max(G)=    1.332282e-02 Rot=16,8
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.646474058 Max(X)(23,11) =     -0.440347821 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION   9: 
+   --- Inactive Energy E0 = -78.14977910 Eh
+CI-ITERATION   0: 
+   -79.055536037   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060058625   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057797331 Eh DE=   -5.764227e-05
+   --- Energy gap subspaces: Ext-Act = -0.622   Act-Int = 0.432
+   N(occ)=  1.12232 0.87740 0.00016 0.00013 0.00000 0.00000
+   ||g|| =     2.336761e-02 Max(G)=    1.320260e-02 Rot=16,8
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.486861653 Max(X)(20,10) =     -0.386945799 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  10: 
+   --- Inactive Energy E0 = -78.14834482 Eh
+CI-ITERATION   0: 
+   -79.055546934   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060100490   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057823712 Eh DE=   -2.638139e-05
+   --- Energy gap subspaces: Ext-Act = -0.562   Act-Int = 0.431
+   N(occ)=  1.12398 0.87576 0.00013 0.00013 0.00000 0.00000
+   ||g|| =     1.283797e-02 Max(G)=    8.305343e-03 Rot=16,8
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.549231429 Max(X)(20,10) =     -0.381546134 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  11: 
+   --- Inactive Energy E0 = -78.14863590 Eh
+CI-ITERATION   0: 
+   -79.055541925   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060097305   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057819615 Eh DE=    4.097016e-06
+   --- Energy gap subspaces: Ext-Act = -0.581   Act-Int = 0.431
+   N(occ)=  1.12373 0.87601 0.00013 0.00013 0.00000 0.00000
+   ||g|| =     1.460071e-02 Max(G)=    9.281513e-03 Rot=16,8
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.521300212 Max(X)(20,10) =      0.395080393 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  12: 
+   --- Inactive Energy E0 = -78.14831916 Eh
+CI-ITERATION   0: 
+   -79.055540669   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060086649   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057813659 Eh DE=    5.955978e-06
+   --- Energy gap subspaces: Ext-Act = -0.550   Act-Int = 0.431
+   N(occ)=  1.12359 0.87615 0.00012 0.00013 0.00000 0.00000
+   ||g|| =     1.515505e-02 Max(G)=    9.830573e-03 Rot=16,8
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.526561880 Max(X)(20,10) =     -0.362713506 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  13: 
+   --- Inactive Energy E0 = -78.14776989 Eh
+CI-ITERATION   0: 
+   -79.055574147   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060065199   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057819673 Eh DE=   -6.014247e-06
+   --- Energy gap subspaces: Ext-Act = -0.383   Act-Int = 0.432
+   N(occ)=  1.12209 0.87759 0.00018 0.00015 0.00000 0.00000
+   ||g|| =     1.559524e-02 Max(G)=    8.924117e-03 Rot=16,8
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.390186936 Max(X)(20,10) =     -0.345464988 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  14: 
+   --- Inactive Energy E0 = -78.14876971 Eh
+CI-ITERATION   0: 
+   -79.055550166   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060091504   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057820835 Eh DE=   -1.162031e-06
+   --- Energy gap subspaces: Ext-Act = -0.404   Act-Int = 0.431
+   N(occ)=  1.12469 0.87503 0.00011 0.00017 0.00000 0.00000
+   ||g|| =     1.294486e-02 Max(G)=    5.788861e-03 Rot=16,8
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.316704520 Max(X)(23,11) =      0.204358747 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  15: 
+   --- Inactive Energy E0 = -78.14874130 Eh
+CI-ITERATION   0: 
+   -79.055551384   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060094245   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057822815 Eh DE=   -1.979456e-06
+   --- Energy gap subspaces: Ext-Act = -0.402   Act-Int = 0.431
+   N(occ)=  1.12479 0.87493 0.00011 0.00017 0.00000 0.00000
+   ||g|| =     1.246010e-02 Max(G)=    5.528959e-03 Rot=16,8
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.309092941 Max(X)(23,11) =      0.199257920 
+Warning: badly conditioned DIIS matrix, 1 vectors out of 15 destroyed
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  16: 
+   --- Inactive Energy E0 = -78.14870113 Eh
+CI-ITERATION   0: 
+   -79.055555193   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060112670   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057833931 Eh DE=   -1.111644e-05
+   --- Energy gap subspaces: Ext-Act = -0.404   Act-Int = 0.431
+   N(occ)=  1.12541 0.87431 0.00011 0.00017 0.00000 0.00000
+   ||g|| =     8.947887e-03 Max(G)=   -5.933649e-03 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.326095340 Max(X)(17,11) =     -0.206905683 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  17: 
+   --- Inactive Energy E0 = -78.14854794 Eh
+CI-ITERATION   0: 
+   -79.055557914   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060129750   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057843832 Eh DE=   -9.900802e-06
+   --- Energy gap subspaces: Ext-Act = -0.401   Act-Int = 0.430
+   N(occ)=  1.12665 0.87307 0.00010 0.00017 0.00000 0.00000
+   ||g|| =     6.055994e-03 Max(G)=   -5.390355e-03 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.232167814 Max(X)(17,11) =      0.181583146 
+Warning: badly conditioned DIIS matrix, 1 vectors out of 15 destroyed
+Warning: badly conditioned DIIS matrix, 1 vectors out of 14 destroyed
+Warning: badly conditioned DIIS matrix, 1 vectors out of 13 destroyed
+Warning: badly conditioned DIIS matrix, 1 vectors out of 12 destroyed
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  18: 
+   --- Inactive Energy E0 = -78.14857381 Eh
+CI-ITERATION   0: 
+   -79.055553549   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060121919   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057837734 Eh DE=    6.098373e-06
+   --- Energy gap subspaces: Ext-Act = -0.388   Act-Int = 0.430
+   N(occ)=  1.12719 0.87254 0.00010 0.00017 0.00000 0.00000
+   ||g|| =     7.072877e-03 Max(G)=   -6.678370e-03 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.260620486 Max(X)(17,11) =     -0.198388061 
+Warning: badly conditioned DIIS matrix, 1 vectors out of 12 destroyed
+Warning: badly conditioned DIIS matrix, 1 vectors out of 11 destroyed
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  19: 
+   --- Inactive Energy E0 = -78.14867710 Eh
+CI-ITERATION   0: 
+   -79.055552714   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060122502   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057837608 Eh DE=    1.259239e-07
+   --- Energy gap subspaces: Ext-Act = -0.391   Act-Int = 0.430
+   N(occ)=  1.12731 0.87242 0.00010 0.00017 0.00000 0.00000
+   ||g|| =     7.306207e-03 Max(G)=   -6.670297e-03 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.262477405 Max(X)(17,11) =     -0.192511173 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  20: 
+   --- Inactive Energy E0 = -78.14846040 Eh
+CI-ITERATION   0: 
+   -79.055560503   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060128110   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057844306 Eh DE=   -6.698657e-06
+   --- Energy gap subspaces: Ext-Act = -0.403   Act-Int = 0.430
+   N(occ)=  1.12713 0.87261 0.00010 0.00016 0.00000 0.00000
+   ||g|| =     6.013654e-03 Max(G)=   -5.349186e-03 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.268498642 Max(X)(17,11) =     -0.176482817 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  21: 
+   --- Inactive Energy E0 = -78.14848990 Eh
+CI-ITERATION   0: 
+   -79.055558666   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060125029   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057841847 Eh DE=    2.459145e-06
+   --- Energy gap subspaces: Ext-Act = -0.400   Act-Int = 0.430
+   N(occ)=  1.12720 0.87253 0.00010 0.00017 0.00000 0.00000
+   ||g|| =     6.586877e-03 Max(G)=   -5.953127e-03 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.265274846 Max(X)(17,11) =     -0.179165722 
+Warning: badly conditioned DIIS matrix, 1 vectors out of 13 destroyed
+Warning: badly conditioned DIIS matrix, 1 vectors out of 12 destroyed
+   --- SFit(Active Orbitals)
+   --- Failed to constrain active orbitals due to rotations:
+       Rot( 11, 21) with OVL=0.386228
+   --- SFit: squared overlap of the active orbitals QMAT=C*CT
+                  0          1          2          3          4          5    
+      0       0.999949  -0.000000  -0.004116  -0.000000  -0.000013   0.000000
+      1      -0.000000   0.999666  -0.000000  -0.010437   0.000000  -0.000000
+      2      -0.004116  -0.000000   0.640241  -0.000000  -0.001146   0.000000
+      3      -0.000000  -0.010437  -0.000000   0.502316  -0.000000  -0.000000
+      4      -0.000013   0.000000  -0.001146  -0.000000   0.999995   0.000000
+      5       0.000000  -0.000000   0.000000  -0.000000   0.000000   1.000000
+
+   --- Warning: Active Space composition changed by more than 50% in this iteration. 
+                Maybe it will fix itself: Final composition should be checked
+
+MACRO-ITERATION  22: 
+   --- Inactive Energy E0 = -78.14721364 Eh
+CI-ITERATION   0: 
+   -79.055475312   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060161424   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057818368 Eh DE=    2.347906e-05
+   --- Energy gap subspaces: Ext-Act = -0.709   Act-Int = 0.430
+   N(occ)=  1.12631 0.87342 0.00016 0.00011 0.00000 0.00000
+   ||g|| =     1.096845e-02 Max(G)=    9.781219e-03 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.511598531 Max(X)(20,10) =      0.430544617 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  23: 
+   --- Inactive Energy E0 = -78.14742573 Eh
+CI-ITERATION   0: 
+   -79.055495407   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060159038   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057827222 Eh DE=   -8.854199e-06
+   --- Energy gap subspaces: Ext-Act = -0.644   Act-Int = 0.430
+   N(occ)=  1.12609 0.87364 0.00015 0.00011 0.00000 0.00000
+   ||g|| =     9.469020e-03 Max(G)=    8.107095e-03 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.507355405 Max(X)(20,10) =      0.397623875 
+Warning: badly conditioned DIIS matrix, 1 vectors out of 13 destroyed
+Warning: badly conditioned DIIS matrix, 1 vectors out of 12 destroyed
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  24: 
+   --- Inactive Energy E0 = -78.14873912 Eh
+CI-ITERATION   0: 
+   -79.055534656   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060164920   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057849788 Eh DE=   -2.256565e-05
+   --- Energy gap subspaces: Ext-Act = -0.378   Act-Int = 0.430
+   N(occ)=  1.12681 0.87293 0.00012 0.00013 0.00000 0.00000
+   ||g|| =     4.368658e-03 Max(G)=   -2.512059e-03 Rot=16,8
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.523044198 Max(X)(23,11) =      0.387078059 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  25: 
+   --- Inactive Energy E0 = -78.14914534 Eh
+CI-ITERATION   0: 
+   -79.055521573   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060154955   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057838264 Eh DE=    1.152402e-05
+   --- Energy gap subspaces: Ext-Act = -0.362   Act-Int = 0.430
+   N(occ)=  1.12711 0.87263 0.00012 0.00014 0.00000 0.00000
+   ||g|| =     6.888623e-03 Max(G)=   -4.200418e-03 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.551333714 Max(X)(23,11) =      0.419581067 
+Warning: badly conditioned DIIS matrix, 1 vectors out of 13 destroyed
+Warning: badly conditioned DIIS matrix, 1 vectors out of 12 destroyed
+Warning: badly conditioned DIIS matrix, 1 vectors out of 11 destroyed
+Warning: badly conditioned DIIS matrix, 1 vectors out of 10 destroyed
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  26: 
+   --- Inactive Energy E0 = -78.14851409 Eh
+CI-ITERATION   0: 
+   -79.055549346   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060149887   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057849616 Eh DE=   -1.135234e-05
+   --- Energy gap subspaces: Ext-Act = -0.389   Act-Int = 0.430
+   N(occ)=  1.12690 0.87281 0.00012 0.00016 0.00000 0.00000
+   ||g|| =     4.001280e-03 Max(G)=   -3.178612e-03 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.382212427 Max(X)(23,11) =     -0.259072328 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  27: 
+   --- Inactive Energy E0 = -78.14816367 Eh
+CI-ITERATION   0: 
+   -79.055561379   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060147764   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057854572 Eh DE=   -4.955469e-06
+   --- Energy gap subspaces: Ext-Act = -0.377   Act-Int = 0.430
+   N(occ)=  1.12676 0.87294 0.00012 0.00018 0.00000 0.00000
+   ||g|| =     2.664970e-03 Max(G)=   -2.196680e-03 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.259781243 Max(X)(17,11) =      0.181019169 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  28: 
+   --- Inactive Energy E0 = -78.14812780 Eh
+CI-ITERATION   0: 
+   -79.055562155   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060147643   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057854899 Eh DE=   -3.272523e-07
+   --- Energy gap subspaces: Ext-Act = -0.378   Act-Int = 0.430
+   N(occ)=  1.12674 0.87296 0.00012 0.00018 0.00000 0.00000
+   ||g|| =     2.567674e-03 Max(G)=   -2.050286e-03 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.252486119 Max(X)(17,11) =      0.177249292 
+Warning: badly conditioned DIIS matrix, 1 vectors out of 12 destroyed
+Warning: badly conditioned DIIS matrix, 1 vectors out of 11 destroyed
+Warning: badly conditioned DIIS matrix, 1 vectors out of 10 destroyed
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  29: 
+   --- Inactive Energy E0 = -78.14740557 Eh
+CI-ITERATION   0: 
+   -79.055567354   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060134398   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057850876 Eh DE=    4.022663e-06
+   --- Energy gap subspaces: Ext-Act = -0.414   Act-Int = 0.430
+   N(occ)=  1.12622 0.87348 0.00013 0.00017 0.00000 0.00000
+   ||g|| =     4.925623e-03 Max(G)=    3.590853e-03 Rot=16,8
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.139477164 Max(X)(17,11) =     -0.086493384 
+Warning: badly conditioned DIIS matrix, 1 vectors out of 10 destroyed
+Warning: badly conditioned DIIS matrix, 1 vectors out of 9 destroyed
+Warning: badly conditioned DIIS matrix, 1 vectors out of 8 destroyed
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  30: 
+   --- Inactive Energy E0 = -78.14893450 Eh
+CI-ITERATION   0: 
+   -79.055538701   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060123158   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057830930 Eh DE=    1.994671e-05
+   --- Energy gap subspaces: Ext-Act = -0.355   Act-Int = 0.430
+   N(occ)=  1.12759 0.87210 0.00011 0.00021 0.00000 0.00000
+   ||g|| =     8.366172e-03 Max(G)=   -7.128115e-03 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.254477384 Max(X)(17,11) =      0.162332889 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  31: 
+   --- Inactive Energy E0 = -78.14892203 Eh
+CI-ITERATION   0: 
+   -79.055539080   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060123185   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057831132 Eh DE=   -2.024653e-07
+   --- Energy gap subspaces: Ext-Act = -0.356   Act-Int = 0.430
+   N(occ)=  1.12757 0.87212 0.00011 0.00021 0.00000 0.00000
+   ||g|| =     8.315326e-03 Max(G)=   -7.123202e-03 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.253140941 Max(X)(17,11) =     -0.162753574 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  32: 
+   --- Inactive Energy E0 = -78.14872415 Eh
+CI-ITERATION   0: 
+   -79.055549619   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060128074   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057838846 Eh DE=   -7.714222e-06
+   --- Energy gap subspaces: Ext-Act = -0.387   Act-Int = 0.430
+   N(occ)=  1.12713 0.87257 0.00010 0.00019 0.00000 0.00000
+   ||g|| =     6.724021e-03 Max(G)=   -6.295610e-03 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.213171290 Max(X)(17,11) =     -0.174636749 
+Warning: badly conditioned DIIS matrix, 1 vectors out of 10 destroyed
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  33: 
+   --- Inactive Energy E0 = -78.14863774 Eh
+CI-ITERATION   0: 
+   -79.055549446   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060124082   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057836764 Eh DE=    2.082234e-06
+   --- Energy gap subspaces: Ext-Act = -0.378   Act-Int = 0.430
+   N(occ)=  1.12704 0.87265 0.00011 0.00020 0.00000 0.00000
+   ||g|| =     7.062710e-03 Max(G)=   -6.695853e-03 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.223920770 Max(X)(17,11) =     -0.177320566 
+Warning: badly conditioned DIIS matrix, 1 vectors out of 10 destroyed
+Warning: badly conditioned DIIS matrix, 1 vectors out of 9 destroyed
+Warning: badly conditioned DIIS matrix, 1 vectors out of 8 destroyed
+Warning: badly conditioned DIIS matrix, 1 vectors out of 7 destroyed
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  34: 
+   --- Inactive Energy E0 = -78.14815335 Eh
+CI-ITERATION   0: 
+   -79.055564167   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060152057   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057858112 Eh DE=   -2.134787e-05
+   --- Energy gap subspaces: Ext-Act = -0.401   Act-Int = 0.430
+   N(occ)=  1.12697 0.87274 0.00012 0.00018 0.00000 0.00000
+   ||g|| =     1.631310e-03 Max(G)=   -9.756130e-04 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.096833216 Max(X)(17,11) =      0.068837476 
+Warning: badly conditioned DIIS matrix, 1 vectors out of 7 destroyed
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  35: 
+   --- Inactive Energy E0 = -78.14816651 Eh
+CI-ITERATION   0: 
+   -79.055563452   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060154070   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057858761 Eh DE=   -6.487401e-07
+   --- Energy gap subspaces: Ext-Act = -0.405   Act-Int = 0.430
+   N(occ)=  1.12706 0.87264 0.00011 0.00018 0.00000 0.00000
+   ||g|| =     1.401668e-03 Max(G)=   -6.496536e-04 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.039413940 Max(X)(17,11) =     -0.024323524 
+Warning: badly conditioned DIIS matrix, 1 vectors out of 7 destroyed
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  36: 
+   --- Inactive Energy E0 = -78.14810490 Eh
+CI-ITERATION   0: 
+   -79.055564329   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060153955   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057859142 Eh DE=   -3.812680e-07
+   --- Energy gap subspaces: Ext-Act = -0.407   Act-Int = 0.430
+   N(occ)=  1.12706 0.87264 0.00012 0.00018 0.00000 0.00000
+   ||g|| =     1.134483e-03 Max(G)=   -5.456599e-04 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.030449951 Max(X)(17,11) =      0.017969476 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  37: 
+   --- Inactive Energy E0 = -78.14812734 Eh
+CI-ITERATION   0: 
+   -79.055563989   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060153908   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057858949 Eh DE=    1.934437e-07
+   --- Energy gap subspaces: Ext-Act = -0.407   Act-Int = 0.430
+   N(occ)=  1.12706 0.87264 0.00011 0.00018 0.00000 0.00000
+   ||g|| =     1.257217e-03 Max(G)=   -6.167354e-04 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.032204590 Max(X)(17,11) =      0.020314298 
+Warning: badly conditioned DIIS matrix, 1 vectors out of 8 destroyed
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  38: 
+   --- Inactive Energy E0 = -78.14803479 Eh
+CI-ITERATION   0: 
+   -79.055565184   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060154042   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057859613 Eh DE=   -6.648119e-07
+   --- Energy gap subspaces: Ext-Act = -0.412   Act-Int = 0.430
+   N(occ)=  1.12706 0.87264 0.00012 0.00018 0.00000 0.00000
+   ||g|| =     7.330657e-04 Max(G)=   -3.488418e-04 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.002268542 Max(X)(18,10) =     -0.001737104 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  39: 
+   --- Inactive Energy E0 = -78.14798137 Eh
+CI-ITERATION   0: 
+   -79.055565461   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060154311   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057859886 Eh DE=   -2.725149e-07
+   --- Energy gap subspaces: Ext-Act = -0.412   Act-Int = 0.430
+   N(occ)=  1.12707 0.87263 0.00012 0.00018 0.00000 0.00000
+   ||g|| =     3.914753e-04 Max(G)=   -1.872931e-04 Rot=21,9
+   --- Orbital Update [SuperCI(PT)]
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+   --- SX_PT (Skipped TA=2 IT=0): ||X|| =      0.001831036 Max(X)(23,11) =      0.000995669 
+   --- SFit(Active Orbitals)
+
+MACRO-ITERATION  40: 
+   --- Inactive Energy E0 = -78.14795463 Eh
+CI-ITERATION   0: 
+   -79.055565570   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060154375   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057859972 Eh DE=   -8.630570e-08
+   --- Energy gap subspaces: Ext-Act = -0.412   Act-Int = 0.430
+   N(occ)=  1.12707 0.87263 0.00012 0.00018 0.00000 0.00000
+   ||g|| =     1.791941e-04 Max(G)=    8.318952e-05 Rot=9,3
+                     ---- THE CAS-SCF GRADIENT HAS CONVERGED ----
+                            --- FINALIZING ORBITALS ---
+                    ---- DOING ONE FINAL ITERATION FOR PRINTING ----
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+
+MACRO-ITERATION  41: 
+   --- Inactive Energy E0 = -78.14795462 Eh
+   --- All densities will be recomputed
+CI-ITERATION   0: 
+   -79.055565569   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+CI-ITERATION   0: 
+   -79.060154374   0.000000000000 (    0.00)
+   CI-PROBLEM SOLVED
+   DENSITIES MADE
+   E(CAS)=   -79.057859971 Eh DE=    8.569714e-10
+   --- Energy gap subspaces: Ext-Act = -0.485   Act-Int = 0.431
+   N(occ)=  1.12716 0.87278 0.00003 0.00003 0.00000 0.00000
+   ||g|| =     1.791942e-04 Max(G)=   -8.336080e-05 Rot=9,3
+   --- Checking final active space composition 
+   --- Failed to constrain active orbitals due to rotations:
+       Rot( 10, 22) with OVL=0.920532
+       Rot( 11, 21) with OVL=0.713309
+   --- SFit: squared overlap of the active orbitals QMAT=C*CT
+                  0          1          2          3          4          5    
+      0       0.999912   0.000000  -0.007358   0.000000   0.000038  -0.000000
+      1       0.000000   0.999667   0.000000  -0.010702  -0.000000   0.000000
+      2      -0.007358   0.000000   0.073657  -0.000009   0.001966  -0.000000
+      3       0.000000  -0.010702  -0.000009   0.273934  -0.000008   0.000000
+      4       0.000038  -0.000000   0.001966  -0.000008   0.999874   0.000000
+      5      -0.000000   0.000000  -0.000000   0.000000   0.000000   0.999959
+
+   --- Warning: Active space composition changed by more than 50% compared to guess. 
+                This might have occured for a number of reasons e.g 
+                   * NR/AugHess found negative eigenvalues and left the local basin
+                   * active space includes barely correlated orbitals with occupations close to 0.0 or 2.0
+                   * active space misses important orbitals
+                   * invalid or linear dependent RI basis sets 
+
+                Check the final orbitals and restart after re-rotating the orbitals.
+                Alternatively, retry with modified convergence settings: 
+                   * Check the design of the calculation
+                   * Start with a better/different guess
+                   * SuperCI_PT (default): Use smaller MaxRot. Current value = 0.200 
+                                          (Levelshift/FreezeIE/FreezeAct/GradScaling do not apply to SuperCI_PT!)
+
+                   * Try a different orbstep/switchstep. 
+
+                   * NR/SOSCF: Delay switchstep with a smaller value of switchconv. Current value= 0.030 
+                   * SuperCI/DIIS/NR: Use larger levelshifts (e.g. 2). Default = a minimum of 0.600
+                   * SuperCI/DIIS/NR: Tighten freezeIE. Default = 0.950
+                   * SuperCI/DIIS/NR: Reduce the stepsize with gradscaling. Default= 1.0 (no scaling)
+
+
+
+--------------
+CASSCF RESULTS
+--------------
+
+Final CASSCF energy       : -79.057859971 Eh   -2151.2737 eV
+
+----------------
+ORBITAL ENERGIES
+----------------
+
+  NO   OCC          E(Eh)            E(eV) 
+   0   2.0000     -11.228637      -305.5468 
+   1   2.0000     -11.228596      -305.5456 
+   2   2.0000      -0.887695       -24.1554 
+   3   2.0000      -0.881860       -23.9966 
+   4   2.0000      -0.570861       -15.5339 
+   5   2.0000      -0.570858       -15.5338 
+   6   2.0000      -0.566864       -15.4252 
+   7   2.0000      -0.566861       -15.4251 
+   8   1.1272      -0.135968        -3.6999 
+   9   0.8728      -0.066977        -1.8225 
+  10   0.0000       0.712820        19.3968 
+  11   0.0000       0.655208        17.8291 
+  12   0.0000       0.261776         7.1233 
+  13   0.0000       0.261750         7.1226 
+  14   0.0000       0.227416         6.1883 
+  15   0.0000       0.294417         8.0115 
+  16   0.0000       0.294424         8.0117 
+  17   0.0000       0.359481         9.7820 
+  18   0.0000       0.583739        15.8843 
+  19   0.0000       0.599782        16.3209 
+  20   0.0000       0.599813        16.3218 
+  21   0.0000       0.653179        17.7739 
+  22   0.0000       0.653211        17.7748 
+  23   0.0000       0.834537        22.7089 
+  24   0.0000       0.857883        23.3442 
+  25   0.0000       0.925099        25.1732 
+  26   0.0000       0.925120        25.1738 
+  27   0.0000       0.959552        26.1107 
+  28   0.0000       0.959574        26.1113 
+  29   0.0000       0.964596        26.2480 
+  30   0.0000       1.464371        39.8475 
+  31   0.0000       1.464386        39.8480 
+  32   0.0000       1.464886        39.8616 
+  33   0.0000       1.464902        39.8620 
+  34   0.0000       1.747367        47.5483 
+  35   0.0000       1.747368        47.5483 
+  36   0.0000       1.856945        50.5300 
+  37   0.0000       1.857006        50.5317 
+  38   0.0000       1.902737        51.7761 
+  39   0.0000       1.902796        51.7777 
+  40   0.0000       1.971366        53.6436 
+  41   0.0000       2.066982        56.2454 
+  42   0.0000       2.148544        58.4649 
+  43   0.0000       2.161891        58.8280 
+  44   0.0000       2.547322        69.3161 
+  45   0.0000       2.547343        69.3167 
+  46   0.0000       2.550885        69.4131 
+  47   0.0000       2.550889        69.4132 
+  48   0.0000       2.554080        69.5001 
+  49   0.0000       2.554086        69.5002 
+  50   0.0000       2.565115        69.8003 
+  51   0.0000       2.565150        69.8013 
+  52   0.0000       3.192078        86.8609 
+  53   0.0000       3.215758        87.5052 
+  54   0.0000       3.278721        89.2185 
+  55   0.0000       3.278806        89.2208 
+  56   0.0000       3.285679        89.4079 
+  57   0.0000       3.285767        89.4103 
+
+
+---------------------------------------------
+CAS-SCF STATES FOR BLOCK  0 MULT= 3 NROOTS= 1
+---------------------------------------------
+
+ROOT   0:  E=     -79.0555655688 Eh
+      0.99996 [     0]: 110000
+
+
+---------------------------------------------
+CAS-SCF STATES FOR BLOCK  1 MULT= 1 NROOTS= 1
+---------------------------------------------
+
+ROOT   0:  E=     -79.0601543738 Eh
+      0.62717 [     0]: 200000
+      0.37277 [     6]: 020000
+
+
+-----------------------------
+SA-CASSCF TRANSITION ENERGIES
+------------------------------
+
+LOWEST ROOT (ROOT 0 ,MULT 1) =    -79.060154374 Eh -2151.336 eV
+
+STATE   ROOT MULT  DE/a.u.    DE/eV    DE/cm**-1
+   1:    0    3   0.004589     0.125   1007.1
+
+
+--------------
+DENSITY MATRIX
+--------------
+
+                  0          1          2          3          4          5    
+      0       1.127165   0.000000   0.000000   0.000000   0.000000   0.000000
+      1       0.000000   0.872778   0.000000   0.000000  -0.000000  -0.000000
+      2       0.000000   0.000000   0.000028   0.000000  -0.000000  -0.000000
+      3       0.000000   0.000000   0.000000   0.000028  -0.000000   0.000000
+      4       0.000000  -0.000000  -0.000000  -0.000000   0.000000  -0.000000
+      5       0.000000  -0.000000  -0.000000   0.000000  -0.000000   0.000000
+Trace of the electron density:  2.000000
+Extracting Spin-Density from 2-RDM (MULT=3) ... done
+Extracting Spin-Density from 2-RDM (MULT=1) ... done
+
+-------------------
+SPIN-DENSITY MATRIX
+-------------------
+
+                  0          1          2          3          4          5    
+      0       0.499988  -0.000000   0.002407   0.000002   0.000013  -0.000000
+      1      -0.000000   0.499991  -0.000002   0.002140  -0.000000  -0.000000
+      2       0.002407  -0.000002   0.000012   0.000000   0.000000  -0.000000
+      3       0.000002   0.002140   0.000000   0.000009   0.000000  -0.000000
+      4       0.000013  -0.000000   0.000000   0.000000   0.000000  -0.000000
+      5      -0.000000  -0.000000  -0.000000  -0.000000  -0.000000   0.000000
+Trace of the spin density:  1.000000
+
+-----------------
+ENERGY COMPONENTS
+-----------------
+
+One electron energy          :   -166.743717227 Eh       -4537.3272 eV
+Two electron energy          :     56.497033801 Eh        1537.3624 eV
+Nuclear repulsion energy     :     31.188823455 Eh         848.6910 eV
+                               ----------------
+                                  -79.057859971
+
+Kinetic energy               :     78.523461008 Eh        2136.7320 eV
+Potential energy             :   -157.581320979 Eh       -4288.0057 eV
+Virial ratio                 :     -2.006805596 
+                               ----------------
+                                  -79.057859971
+
+Core energy                  :    -78.147954625 Eh    -2126.5140 eV
+
+
+----------------------------
+LOEWDIN ORBITAL-COMPOSITIONS
+----------------------------
+
+                      0         1         2         3         4         5   
+                 -11.22864 -11.22860  -0.88769  -0.88186  -0.57086  -0.57086
+                   2.00000   2.00000   2.00000   2.00000   2.00000   2.00000
+                  --------  --------  --------  --------  --------  --------
+ 0 C  s              49.8      49.7      23.7      23.7       0.0       0.0
+ 0 C  px              0.0       0.0       0.0       0.0       0.0      26.4
+ 0 C  py              0.0       0.0       0.0       0.0      26.4       0.0
+ 0 C  dx2y2           0.0       0.0       0.0       0.0       0.0       0.5
+ 0 C  dxy             0.0       0.0       0.0       0.0       0.5       0.0
+ 1 H  s               0.0       0.0       8.0       8.0       0.0      14.8
+ 1 H  px              0.0       0.0       0.7       0.7       0.0       0.4
+ 1 H  py              0.0       0.0       0.0       0.0       0.3       0.0
+ 2 H  s               0.0       0.0       8.0       8.0      11.1       3.7
+ 2 H  px              0.0       0.0       0.2       0.2       0.2       0.1
+ 2 H  py              0.0       0.0       0.5       0.6       0.1       0.2
+ 3 H  s               0.0       0.0       8.0       8.0      11.1       3.7
+ 3 H  px              0.0       0.0       0.2       0.2       0.2       0.1
+ 3 H  py              0.0       0.0       0.5       0.6       0.1       0.2
+ 4 C  s              49.7      49.8      23.7      23.7       0.0       0.0
+ 4 C  px              0.0       0.0       0.0       0.0       0.0      26.4
+ 4 C  py              0.0       0.0       0.0       0.0      26.4       0.0
+ 4 C  dx2y2           0.0       0.0       0.0       0.0       0.0       0.5
+ 4 C  dxy             0.0       0.0       0.0       0.0       0.5       0.0
+ 5 H  s               0.0       0.0       8.0       8.0       0.0      14.8
+ 5 H  px              0.0       0.0       0.7       0.7       0.0       0.4
+ 5 H  py              0.0       0.0       0.0       0.0       0.3       0.0
+ 6 H  s               0.0       0.0       8.0       8.0      11.1       3.7
+ 6 H  px              0.0       0.0       0.2       0.2       0.2       0.1
+ 6 H  py              0.0       0.0       0.5       0.6       0.1       0.2
+ 7 H  s               0.0       0.0       8.0       8.0      11.1       3.7
+ 7 H  px              0.0       0.0       0.2       0.2       0.2       0.1
+ 7 H  py              0.0       0.0       0.5       0.6       0.1       0.2
+
+                      6         7         8         9        10        11   
+                  -0.56686  -0.56686  -0.13597  -0.06698   0.71282   0.65521
+                   2.00000   2.00000   1.12716   0.87278   0.00003   0.00003
+                  --------  --------  --------  --------  --------  --------
+ 0 C  s               0.0       0.0       0.0       0.0       9.3       9.3
+ 0 C  pz              0.0       0.0      47.2      46.7      35.1      30.2
+ 0 C  px              0.0      26.5       0.0       0.0       0.0       0.0
+ 0 C  py             26.5       0.0       0.0       0.0       0.0       0.0
+ 0 C  dz2             0.0       0.0       0.0       0.0       2.2       0.1
+ 0 C  dx2y2           0.0       0.5       0.0       0.0       0.0       0.0
+ 0 C  dxy             0.5       0.0       0.0       0.0       0.0       0.0
+ 1 H  s               0.0      14.7       0.0       0.0       0.8       2.3
+ 1 H  pz              0.0       0.0       0.9       1.1       0.3       0.3
+ 1 H  px              0.0       0.4       0.0       0.0       0.1       0.8
+ 1 H  py              0.3       0.0       0.0       0.0       0.0       0.0
+ 2 H  s              11.1       3.7       0.0       0.0       0.8       2.3
+ 2 H  pz              0.0       0.0       0.9       1.1       0.3       0.3
+ 2 H  px              0.2       0.1       0.0       0.0       0.0       0.2
+ 2 H  py              0.1       0.2       0.0       0.0       0.0       0.6
+ 3 H  s              11.1       3.7       0.0       0.0       0.8       2.3
+ 3 H  pz              0.0       0.0       0.9       1.1       0.3       0.3
+ 3 H  px              0.2       0.1       0.0       0.0       0.0       0.2
+ 3 H  py              0.1       0.2       0.0       0.0       0.0       0.6
+ 4 C  s               0.0       0.0       0.0       0.0       9.3       9.3
+ 4 C  pz              0.0       0.0      47.2      46.7      35.0      30.3
+ 4 C  px              0.0      26.5       0.0       0.0       0.0       0.0
+ 4 C  py             26.5       0.0       0.0       0.0       0.0       0.0
+ 4 C  dz2             0.0       0.0       0.0       0.0       2.2       0.1
+ 4 C  dx2y2           0.0       0.5       0.0       0.0       0.0       0.0
+ 4 C  dxy             0.5       0.0       0.0       0.0       0.0       0.0
+ 5 H  s               0.0      14.7       0.0       0.0       0.8       2.3
+ 5 H  pz              0.0       0.0       0.9       1.1       0.3       0.3
+ 5 H  px              0.0       0.4       0.0       0.0       0.1       0.8
+ 5 H  py              0.3       0.0       0.0       0.0       0.0       0.0
+ 6 H  s              11.1       3.7       0.0       0.0       0.8       2.3
+ 6 H  pz              0.0       0.0       0.9       1.1       0.3       0.3
+ 6 H  px              0.2       0.1       0.0       0.0       0.0       0.2
+ 6 H  py              0.1       0.2       0.0       0.0       0.0       0.6
+ 7 H  s              11.1       3.7       0.0       0.0       0.8       2.3
+ 7 H  pz              0.0       0.0       0.9       1.1       0.3       0.3
+ 7 H  px              0.2       0.1       0.0       0.0       0.0       0.2
+ 7 H  py              0.1       0.2       0.0       0.0       0.0       0.6
+
+                     12        13        14        15        16        17   
+                   0.26178   0.26175   0.22742   0.29442   0.29442   0.35948
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+ 0 C  s               0.0       0.0       9.7       0.0       0.0      13.1
+ 0 C  pz              0.0       0.0       2.4       0.0       0.0       8.1
+ 0 C  px              8.3       0.0       0.0       7.0       0.0       0.0
+ 0 C  py              0.0       8.3       0.0       0.0       7.0       0.0
+ 0 C  dz2             0.0       0.0       0.2       0.0       0.0       1.4
+ 0 C  dx2y2           0.7       0.0       0.0       0.7       0.0       0.0
+ 0 C  dxy             0.0       0.7       0.0       0.0       0.7       0.0
+ 1 H  s              22.4       0.0      10.5      23.3       0.0       7.2
+ 1 H  px              3.6       0.0       2.0       3.6       0.0       1.8
+ 1 H  py              0.0       1.3       0.0       0.0       1.5       0.0
+ 2 H  s               5.6      16.8      10.6       5.7      17.4       7.4
+ 2 H  px              0.2       1.7       0.5       0.2       1.8       0.4
+ 2 H  py              1.7       1.3       1.5       1.8       1.2       1.3
+ 3 H  s               5.6      16.8      10.6       5.7      17.4       7.4
+ 3 H  px              0.2       1.7       0.5       0.2       1.8       0.4
+ 3 H  py              1.7       1.3       1.5       1.8       1.2       1.3
+ 4 C  s               0.0       0.0       9.7       0.0       0.0      13.1
+ 4 C  pz              0.0       0.0       2.4       0.0       0.0       8.1
+ 4 C  px              8.3       0.0       0.0       7.0       0.0       0.0
+ 4 C  py              0.0       8.3       0.0       0.0       7.0       0.0
+ 4 C  dz2             0.0       0.0       0.2       0.0       0.0       1.4
+ 4 C  dx2y2           0.7       0.0       0.0       0.7       0.0       0.0
+ 4 C  dxy             0.0       0.7       0.0       0.0       0.7       0.0
+ 5 H  s              22.4       0.0      10.5      23.3       0.0       7.2
+ 5 H  px              3.6       0.0       2.0       3.6       0.0       1.8
+ 5 H  py              0.0       1.3       0.0       0.0       1.5       0.0
+ 6 H  s               5.6      16.8      10.6       5.7      17.4       7.4
+ 6 H  px              0.2       1.7       0.5       0.2       1.8       0.4
+ 6 H  py              1.7       1.3       1.5       1.8       1.2       1.3
+ 7 H  s               5.6      16.8      10.6       5.7      17.4       7.4
+ 7 H  px              0.2       1.7       0.5       0.2       1.8       0.4
+ 7 H  py              1.7       1.3       1.5       1.8       1.2       1.3
+
+                     18        19        20        21        22        23   
+                   0.58374   0.59978   0.59981   0.65318   0.65321   0.83454
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+ 0 C  s              22.2       0.0       0.0       0.0       0.0       1.5
+ 0 C  pz             11.5       0.0       0.0       0.0       0.0       0.2
+ 0 C  px              0.0       0.0      27.1       0.0      26.0       0.0
+ 0 C  py              0.0      27.1       0.0      26.0       0.0       0.0
+ 0 C  dz2             3.5       0.0       0.0       0.0       0.0       5.5
+ 0 C  dx2y2           0.0       0.0       4.8       0.0       5.2       0.0
+ 0 C  dxy             0.0       4.8       0.0       5.2       0.0       0.0
+ 1 H  s               4.3       0.0       9.0       0.0       9.0      12.8
+ 1 H  px              0.1       0.0       0.0       0.0       0.0       1.5
+ 1 H  py              0.0       3.1       0.0       3.5       0.0       0.0
+ 2 H  s               4.1       6.7       2.3       6.7       2.2      12.8
+ 2 H  px              0.0       0.6       1.7       0.6       2.0       0.4
+ 2 H  py              0.1       0.1       0.6       0.3       0.6       1.1
+ 3 H  s               4.1       6.7       2.3       6.7       2.2      12.8
+ 3 H  px              0.0       0.6       1.7       0.6       2.0       0.4
+ 3 H  py              0.1       0.1       0.6       0.3       0.6       1.1
+ 4 C  s              22.2       0.0       0.0       0.0       0.0       1.5
+ 4 C  pz             11.5       0.0       0.0       0.0       0.0       0.2
+ 4 C  px              0.0       0.0      27.1       0.0      26.0       0.0
+ 4 C  py              0.0      27.1       0.0      26.0       0.0       0.0
+ 4 C  dz2             3.5       0.0       0.0       0.0       0.0       5.5
+ 4 C  dx2y2           0.0       0.0       4.8       0.0       5.2       0.0
+ 4 C  dxy             0.0       4.8       0.0       5.2       0.0       0.0
+ 5 H  s               4.3       0.0       9.0       0.0       9.0      12.8
+ 5 H  px              0.1       0.0       0.0       0.0       0.0       1.5
+ 5 H  py              0.0       3.1       0.0       3.5       0.0       0.0
+ 6 H  s               4.1       6.7       2.3       6.7       2.2      12.8
+ 6 H  px              0.0       0.6       1.7       0.6       2.0       0.4
+ 6 H  py              0.1       0.1       0.6       0.3       0.6       1.1
+ 7 H  s               4.1       6.7       2.3       6.7       2.2      12.8
+ 7 H  px              0.0       0.6       1.7       0.6       2.0       0.4
+ 7 H  py              0.1       0.1       0.6       0.3       0.6       1.1
+
+                     24        25        26        27        28        29   
+                   0.85788   0.92510   0.92512   0.95955   0.95957   0.96460
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+ 0 C  s              18.6       0.0       0.0       0.0       0.0      36.9
+ 0 C  pz              0.5       0.0       0.0       0.0       0.0       9.5
+ 0 C  px              0.0      22.3       0.0      23.7       0.0       0.0
+ 0 C  py              0.0       0.0      22.3       0.0      23.7       0.0
+ 0 C  dz2             2.0       0.0       0.0       0.0       0.0       0.8
+ 0 C  dx2y2           0.0       2.6       0.0       2.7       0.0       0.0
+ 0 C  dxy             0.0       0.0       2.6       0.0       2.7       0.0
+ 1 H  s               6.9      12.9       0.0      11.8       0.0       0.0
+ 1 H  pz              0.0       0.0       0.0       0.0       0.0       0.3
+ 1 H  px              2.7       3.7       0.0       3.9       0.0       0.6
+ 2 H  s               6.9       3.3       9.7       2.9       8.8       0.0
+ 2 H  pz              0.0       0.0       0.0       0.0       0.0       0.3
+ 2 H  px              0.7       0.1       0.9       0.1       0.9       0.2
+ 2 H  py              2.0       0.9       1.9       0.9       2.0       0.5
+ 3 H  s               6.9       3.3       9.7       2.9       8.8       0.0
+ 3 H  pz              0.0       0.0       0.0       0.0       0.0       0.3
+ 3 H  px              0.7       0.1       0.9       0.1       0.9       0.2
+ 3 H  py              2.0       0.9       1.9       0.9       2.0       0.5
+ 4 C  s              18.6       0.0       0.0       0.0       0.0      36.9
+ 4 C  pz              0.5       0.0       0.0       0.0       0.0       9.5
+ 4 C  px              0.0      22.3       0.0      23.7       0.0       0.0
+ 4 C  py              0.0       0.0      22.3       0.0      23.7       0.0
+ 4 C  dz2             2.0       0.0       0.0       0.0       0.0       0.8
+ 4 C  dx2y2           0.0       2.6       0.0       2.7       0.0       0.0
+ 4 C  dxy             0.0       0.0       2.6       0.0       2.7       0.0
+ 5 H  s               6.9      12.9       0.0      11.8       0.0       0.0
+ 5 H  pz              0.0       0.0       0.0       0.0       0.0       0.3
+ 5 H  px              2.7       3.7       0.0       3.9       0.0       0.6
+ 6 H  s               6.9       3.3       9.7       2.9       8.8       0.0
+ 6 H  pz              0.0       0.0       0.0       0.0       0.0       0.3
+ 6 H  px              0.7       0.1       0.9       0.1       0.9       0.2
+ 6 H  py              2.0       0.9       1.9       0.9       2.0       0.5
+ 7 H  s               6.9       3.3       9.7       2.9       8.8       0.0
+ 7 H  pz              0.0       0.0       0.0       0.0       0.0       0.3
+ 7 H  px              0.7       0.1       0.9       0.1       0.9       0.2
+ 7 H  py              2.0       0.9       1.9       0.9       2.0       0.5
+
+                     30        31        32        33        34        35   
+                   1.46437   1.46439   1.46489   1.46490   1.74737   1.74737
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+ 0 C  dxz            16.0       0.0      16.0       0.0       0.0       0.0
+ 0 C  dyz             0.0      16.0       0.0      16.0       0.0       0.0
+ 1 H  pz             22.7       0.0      22.7       0.0       0.0       0.0
+ 1 H  py              0.0       0.0       0.0       0.0      16.3      17.1
+ 2 H  pz              5.7      17.0       5.7      17.0       0.0       0.0
+ 2 H  px              0.0       0.0       0.0       0.0      12.2      12.8
+ 2 H  py              0.0       0.0       0.0       0.0       4.1       4.3
+ 3 H  pz              5.7      17.0       5.7      17.0       0.0       0.0
+ 3 H  px              0.0       0.0       0.0       0.0      12.2      12.8
+ 3 H  py              0.0       0.0       0.0       0.0       4.1       4.3
+ 4 C  dxz            16.0       0.0      16.0       0.0       0.0       0.0
+ 4 C  dyz             0.0      16.0       0.0      16.0       0.0       0.0
+ 5 H  pz             22.7       0.0      22.7       0.0       0.0       0.0
+ 5 H  py              0.0       0.0       0.0       0.0      17.1      16.3
+ 6 H  pz              5.7      17.0       5.7      17.0       0.0       0.0
+ 6 H  px              0.0       0.0       0.0       0.0      12.8      12.2
+ 6 H  py              0.0       0.0       0.0       0.0       4.3       4.1
+ 7 H  pz              5.7      17.0       5.7      17.0       0.0       0.0
+ 7 H  px              0.0       0.0       0.0       0.0      12.8      12.2
+ 7 H  py              0.0       0.0       0.0       0.0       4.3       4.1
+
+                     36        37        38        39        40        41   
+                   1.85695   1.85701   1.90274   1.90280   1.97137   2.06698
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+ 0 C  s               0.0       0.0       0.0       0.0       0.6       0.2
+ 0 C  pz              0.0       0.0       0.0       0.0       3.2       4.7
+ 0 C  px              4.2       0.0       5.1       0.0       0.0       0.0
+ 0 C  py              0.0       4.2       0.0       5.1       0.0       0.0
+ 0 C  dz2             0.0       0.0       0.0       0.0       0.0       1.6
+ 0 C  dx2y2           7.7       0.0       7.2       0.0       0.0       0.0
+ 0 C  dxy             0.0       7.7       0.0       7.2       0.0       0.0
+ 1 H  s               1.9       0.0       2.2       0.0       0.0       0.0
+ 1 H  pz              0.0       0.0       0.0       0.0      15.3      14.4
+ 1 H  px              6.8       0.0       7.0       0.0       0.0       0.1
+ 1 H  py              0.0      16.6       0.0      16.0       0.0       0.0
+ 2 H  s               0.5       1.4       0.5       1.6       0.0       0.0
+ 2 H  pz              0.0       0.0       0.0       0.0      15.4      14.4
+ 2 H  px             13.8       0.4      13.4       0.3       0.0       0.0
+ 2 H  py              0.4       8.9       0.3       8.9       0.0       0.1
+ 3 H  s               0.5       1.4       0.5       1.6       0.0       0.0
+ 3 H  pz              0.0       0.0       0.0       0.0      15.4      14.4
+ 3 H  px             13.8       0.4      13.4       0.3       0.0       0.0
+ 3 H  py              0.4       8.9       0.3       8.9       0.0       0.1
+ 4 C  s               0.0       0.0       0.0       0.0       0.6       0.2
+ 4 C  pz              0.0       0.0       0.0       0.0       3.2       4.7
+ 4 C  px              4.2       0.0       5.1       0.0       0.0       0.0
+ 4 C  py              0.0       4.2       0.0       5.1       0.0       0.0
+ 4 C  dz2             0.0       0.0       0.0       0.0       0.0       1.6
+ 4 C  dx2y2           7.7       0.0       7.2       0.0       0.0       0.0
+ 4 C  dxy             0.0       7.7       0.0       7.2       0.0       0.0
+ 5 H  s               1.9       0.0       2.2       0.0       0.0       0.0
+ 5 H  pz              0.0       0.0       0.0       0.0      15.3      14.4
+ 5 H  px              6.8       0.0       7.0       0.0       0.0       0.1
+ 5 H  py              0.0      16.6       0.0      16.0       0.0       0.0
+ 6 H  s               0.5       1.4       0.5       1.6       0.0       0.0
+ 6 H  pz              0.0       0.0       0.0       0.0      15.4      14.4
+ 6 H  px             13.8       0.4      13.4       0.3       0.0       0.0
+ 6 H  py              0.4       8.9       0.3       8.9       0.0       0.1
+ 7 H  s               0.5       1.4       0.5       1.6       0.0       0.0
+ 7 H  pz              0.0       0.0       0.0       0.0      15.4      14.4
+ 7 H  px             13.8       0.4      13.4       0.3       0.0       0.0
+ 7 H  py              0.4       8.9       0.3       8.9       0.0       0.1
+
+                     42        43        44        45        46        47   
+                   2.14854   2.16189   2.54732   2.54734   2.55088   2.55089
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+ 0 C  s               3.7       3.3       0.0       0.0       0.0       0.0
+ 0 C  pz              0.2       0.6       0.0       0.0       0.0       0.0
+ 0 C  px              0.0       0.0       0.0       4.2       0.5       0.0
+ 0 C  py              0.0       0.0       4.2       0.0       0.0       0.5
+ 0 C  dz2            30.6      28.9       0.0       0.0       0.0       0.0
+ 0 C  dxz             0.0       0.0       0.0      10.8      31.3       0.0
+ 0 C  dyz             0.0       0.0      10.7       0.0       0.0      31.3
+ 0 C  dx2y2           0.0       0.0       0.0       7.3       0.9       0.0
+ 0 C  dxy             0.0       0.0       7.3       0.0       0.0       0.9
+ 1 H  s               0.3       0.4       0.0       0.4       0.1       0.0
+ 1 H  pz              0.1       0.4       0.0       3.3       9.8       0.0
+ 1 H  px              4.8       4.9       0.0       7.5       0.9       0.0
+ 1 H  py              0.0       0.0       7.3       0.0       0.0       0.9
+ 2 H  s               0.4       0.4       0.3       0.1       0.0       0.0
+ 2 H  pz              0.1       0.4       2.5       0.8       2.4       7.3
+ 2 H  px              1.2       1.2       5.5       1.8       0.2       0.7
+ 2 H  py              3.6       3.7       1.9       5.5       0.6       0.2
+ 3 H  s               0.4       0.4       0.3       0.1       0.0       0.0
+ 3 H  pz              0.1       0.4       2.5       0.8       2.4       7.3
+ 3 H  px              1.2       1.2       5.5       1.8       0.2       0.7
+ 3 H  py              3.6       3.7       1.9       5.5       0.6       0.2
+ 4 C  s               3.7       3.3       0.0       0.0       0.0       0.0
+ 4 C  pz              0.2       0.6       0.0       0.0       0.0       0.0
+ 4 C  px              0.0       0.0       0.0       4.2       0.5       0.0
+ 4 C  py              0.0       0.0       4.2       0.0       0.0       0.5
+ 4 C  dz2            30.6      28.9       0.0       0.0       0.0       0.0
+ 4 C  dxz             0.0       0.0       0.0      10.8      31.3       0.0
+ 4 C  dyz             0.0       0.0      10.7       0.0       0.0      31.3
+ 4 C  dx2y2           0.0       0.0       0.0       7.3       0.9       0.0
+ 4 C  dxy             0.0       0.0       7.3       0.0       0.0       0.9
+ 5 H  s               0.4       0.4       0.0       0.4       0.1       0.0
+ 5 H  pz              0.1       0.4       0.0       3.3       9.8       0.0
+ 5 H  px              4.8       4.9       0.0       7.5       0.9       0.0
+ 5 H  py              0.0       0.0       7.3       0.0       0.0       0.9
+ 6 H  s               0.4       0.4       0.3       0.1       0.0       0.0
+ 6 H  pz              0.1       0.4       2.5       0.8       2.4       7.3
+ 6 H  px              1.2       1.2       5.5       1.8       0.2       0.7
+ 6 H  py              3.6       3.7       1.9       5.5       0.6       0.2
+ 7 H  s               0.4       0.4       0.3       0.1       0.0       0.0
+ 7 H  pz              0.1       0.4       2.5       0.8       2.4       7.3
+ 7 H  px              1.2       1.2       5.5       1.8       0.2       0.7
+ 7 H  py              3.6       3.7       1.9       5.5       0.6       0.2
+
+                     48        49        50        51        52        53   
+                   2.55408   2.55409   2.56511   2.56515   3.19208   3.21576
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+ 0 C  s               0.0       0.0       0.0       0.0      12.4      12.3
+ 0 C  px              0.0       1.9       0.0       5.4       0.0       0.0
+ 0 C  py              1.9       0.0       5.4       0.0       0.0       0.0
+ 0 C  dz2             0.0       0.0       0.0       0.0      11.5      11.6
+ 0 C  dxz             0.0      23.2       0.0       2.7       0.0       0.0
+ 0 C  dyz            23.3       0.0       2.7       0.0       0.0       0.0
+ 0 C  dx2y2           0.0       3.4       0.0      10.0       0.0       0.0
+ 0 C  dxy             3.3       0.0      10.0       0.0       0.0       0.0
+ 1 H  s               0.0       0.2       0.0       0.7       2.4       2.5
+ 1 H  pz              0.0       7.3       0.0       0.9       0.0       0.0
+ 1 H  px              0.0       3.4       0.0       9.7       6.3       6.2
+ 1 H  py              3.4       0.0      10.0       0.0       0.0       0.0
+ 2 H  s               0.2       0.1       0.5       0.2       2.4       2.4
+ 2 H  pz              5.5       1.8       0.7       0.2       0.0       0.0
+ 2 H  px              2.5       0.8       7.4       2.5       1.6       1.6
+ 2 H  py              0.8       2.5       2.4       7.4       4.7       4.7
+ 3 H  s               0.2       0.1       0.5       0.2       2.4       2.4
+ 3 H  pz              5.5       1.8       0.7       0.2       0.0       0.0
+ 3 H  px              2.5       0.8       7.4       2.5       1.6       1.6
+ 3 H  py              0.8       2.5       2.4       7.4       4.7       4.7
+ 4 C  s               0.0       0.0       0.0       0.0      12.4      12.3
+ 4 C  px              0.0       1.9       0.0       5.4       0.0       0.0
+ 4 C  py              1.9       0.0       5.4       0.0       0.0       0.0
+ 4 C  dz2             0.0       0.0       0.0       0.0      11.5      11.6
+ 4 C  dxz             0.0      23.2       0.0       2.7       0.0       0.0
+ 4 C  dyz            23.3       0.0       2.7       0.0       0.0       0.0
+ 4 C  dx2y2           0.0       3.4       0.0      10.0       0.0       0.0
+ 4 C  dxy             3.3       0.0      10.0       0.0       0.0       0.0
+ 5 H  s               0.0       0.2       0.0       0.7       2.4       2.5
+ 5 H  pz              0.0       7.3       0.0       0.9       0.0       0.0
+ 5 H  px              0.0       3.4       0.0       9.7       6.3       6.2
+ 5 H  py              3.4       0.0      10.0       0.0       0.0       0.0
+ 6 H  s               0.2       0.1       0.5       0.2       2.4       2.4
+ 6 H  pz              5.5       1.8       0.7       0.2       0.0       0.0
+ 6 H  px              2.5       0.8       7.4       2.5       1.6       1.6
+ 6 H  py              0.8       2.5       2.4       7.4       4.7       4.7
+ 7 H  s               0.2       0.1       0.5       0.2       2.4       2.4
+ 7 H  pz              5.5       1.8       0.7       0.2       0.0       0.0
+ 7 H  px              2.5       0.8       7.4       2.5       1.6       1.6
+ 7 H  py              0.8       2.5       2.4       7.4       4.7       4.7
+
+                     54        55        56        57   
+                   3.27872   3.27881   3.28568   3.28577
+                   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------
+ 0 C  px              5.6       0.0       5.7       0.0
+ 0 C  py              0.0       5.6       0.0       5.7
+ 0 C  dx2y2          23.1       0.0      22.8       0.0
+ 0 C  dxy             0.0      23.1       0.0      22.8
+ 1 H  s               4.9       0.0       5.0       0.0
+ 1 H  px              8.0       0.0       8.0       0.0
+ 1 H  py              0.0       1.3       0.0       1.2
+ 2 H  s               1.2       3.7       1.3       3.8
+ 2 H  px              2.5       0.5       2.4       0.6
+ 2 H  py              0.5       5.8       0.6       5.8
+ 3 H  s               1.2       3.7       1.3       3.8
+ 3 H  px              2.5       0.5       2.4       0.6
+ 3 H  py              0.5       5.8       0.6       5.8
+ 4 C  px              5.6       0.0       5.7       0.0
+ 4 C  py              0.0       5.6       0.0       5.7
+ 4 C  dx2y2          23.1       0.0      22.8       0.0
+ 4 C  dxy             0.0      23.1       0.0      22.8
+ 5 H  s               4.9       0.0       5.0       0.0
+ 5 H  px              8.0       0.0       8.0       0.0
+ 5 H  py              0.0       1.3       0.0       1.2
+ 6 H  s               1.2       3.7       1.3       3.8
+ 6 H  px              2.5       0.5       2.4       0.6
+ 6 H  py              0.5       5.8       0.6       5.8
+ 7 H  s               1.2       3.7       1.3       3.8
+ 7 H  px              2.5       0.5       2.4       0.6
+ 7 H  py              0.5       5.8       0.6       5.8
+
+----------------------------
+LOEWDIN REDUCED ACTIVE MOs  
+----------------------------
+
+                      6         7         8         9        10        11   
+                  -0.56686  -0.56686  -0.13597  -0.06698   0.71282   0.65521
+                   2.00000   2.00000   1.12716   0.87278   0.00003   0.00003
+                  --------  --------  --------  --------  --------  --------
+ 0 C  s               0.0       0.0       0.0       0.0       9.3       9.3
+ 0 C  pz              0.0       0.0      47.2      46.7      35.1      30.2
+ 0 C  px              0.0      26.5       0.0       0.0       0.0       0.0
+ 0 C  py             26.5       0.0       0.0       0.0       0.0       0.0
+ 1 H  s               0.0      14.7       0.0       0.0       0.8       2.3
+ 2 H  s              11.1       3.7       0.0       0.0       0.8       2.3
+ 3 H  s              11.1       3.7       0.0       0.0       0.8       2.3
+ 4 C  s               0.0       0.0       0.0       0.0       9.3       9.3
+ 4 C  pz              0.0       0.0      47.2      46.7      35.0      30.3
+ 4 C  px              0.0      26.5       0.0       0.0       0.0       0.0
+ 4 C  py             26.5       0.0       0.0       0.0       0.0       0.0
+ 5 H  s               0.0      14.7       0.0       0.0       0.8       2.3
+ 6 H  s              11.1       3.7       0.0       0.0       0.8       2.3
+ 7 H  s              11.1       3.7       0.0       0.0       0.8       2.3
+
+                     12        13        14        15        16        17   
+                   0.26178   0.26175   0.22742   0.29442   0.29442   0.35948
+                   0.00000   0.00000   0.00000   0.00000   0.00000   0.00000
+                  --------  --------  --------  --------  --------  --------
+ 0 C  s               0.0       0.0       9.7       0.0       0.0      13.1
+ 0 C  pz              0.0       0.0       2.4       0.0       0.0       8.1
+ 0 C  px              8.3       0.0       0.0       7.0       0.0       0.0
+ 0 C  py              0.0       8.3       0.0       0.0       7.0       0.0
+ 1 H  s              22.4       0.0      10.5      23.3       0.0       7.2
+ 2 H  s               5.6      16.8      10.6       5.7      17.4       7.4
+ 3 H  s               5.6      16.8      10.6       5.7      17.4       7.4
+ 4 C  s               0.0       0.0       9.7       0.0       0.0      13.1
+ 4 C  pz              0.0       0.0       2.4       0.0       0.0       8.1
+ 4 C  px              8.3       0.0       0.0       7.0       0.0       0.0
+ 4 C  py              0.0       8.3       0.0       0.0       7.0       0.0
+ 5 H  s              22.4       0.0      10.5      23.3       0.0       7.2
+ 6 H  s               5.6      16.8      10.6       5.7      17.4       7.4
+ 7 H  s               5.6      16.8      10.6       5.7      17.4       7.4
+
+------------------------------------------------------------------------------
+                           ORCA POPULATION ANALYSIS
+------------------------------------------------------------------------------
+Input electron density              ... caspt2.scfp
+Input spin density                  ... caspt2.scfr
+BaseName (.gbw .S,...)              ... caspt2
+
+                    ********************************
+                    * MULLIKEN POPULATION ANALYSIS *
+                    ********************************
+
+------------------------------------------
+MULLIKEN ATOMIC CHARGES AND SPIN DENSITIES
+------------------------------------------
+   0 C :   -0.204255    0.491385
+   1 H :    0.068097    0.002872
+   2 H :    0.068079    0.002871
+   3 H :    0.068079    0.002871
+   4 C :   -0.204255    0.491385
+   5 H :    0.068097    0.002872
+   6 H :    0.068079    0.002871
+   7 H :    0.068079    0.002871
+Sum of atomic charges       :   -0.0000000
+Sum of atomic spin densities:    1.0000000
+
+---------------------------------------------------
+MULLIKEN REDUCED ORBITAL CHARGES AND SPIN DENSITIES
+---------------------------------------------------
+CHARGE
+  0 C s       :     3.212688  s :     3.212688
+      pz      :     0.983621  p :     2.972942
+      px      :     0.994653
+      py      :     0.994667
+      dz2     :     0.002028  d :     0.018626
+      dxz     :     0.000001
+      dyz     :     0.000001
+      dx2y2   :     0.008297
+      dxy     :     0.008299
+  1 H s       :     0.904333  s :     0.904333
+      pz      :     0.005306  p :     0.027570
+      px      :     0.018832
+      py      :     0.003431
+  2 H s       :     0.904349  s :     0.904349
+      pz      :     0.005307  p :     0.027572
+      px      :     0.007282
+      py      :     0.014982
+  3 H s       :     0.904349  s :     0.904349
+      pz      :     0.005307  p :     0.027572
+      px      :     0.007282
+      py      :     0.014982
+  4 C s       :     3.212687  s :     3.212687
+      pz      :     0.983621  p :     2.972942
+      px      :     0.994653
+      py      :     0.994667
+      dz2     :     0.002028  d :     0.018626
+      dxz     :     0.000001
+      dyz     :     0.000001
+      dx2y2   :     0.008297
+      dxy     :     0.008299
+  5 H s       :     0.904333  s :     0.904333
+      pz      :     0.005306  p :     0.027570
+      px      :     0.018832
+      py      :     0.003431
+  6 H s       :     0.904349  s :     0.904349
+      pz      :     0.005307  p :     0.027572
+      px      :     0.007282
+      py      :     0.014982
+  7 H s       :     0.904349  s :     0.904349
+      pz      :     0.005307  p :     0.027572
+      px      :     0.007282
+      py      :     0.014982
+
+SPIN
+  0 C s       :    -0.000245  s :    -0.000245
+      pz      :     0.491608  p :     0.491608
+      px      :    -0.000000
+      py      :    -0.000000
+      dz2     :     0.000023  d :     0.000023
+      dxz     :     0.000000
+      dyz     :     0.000000
+      dx2y2   :     0.000000
+      dxy     :     0.000000
+  1 H s       :     0.000220  s :     0.000220
+      pz      :     0.002652  p :     0.002652
+      px      :     0.000000
+      py      :     0.000000
+  2 H s       :     0.000219  s :     0.000219
+      pz      :     0.002652  p :     0.002653
+      px      :     0.000000
+      py      :     0.000000
+  3 H s       :     0.000219  s :     0.000219
+      pz      :     0.002652  p :     0.002653
+      px      :     0.000000
+      py      :     0.000000
+  4 C s       :    -0.000245  s :    -0.000245
+      pz      :     0.491608  p :     0.491608
+      px      :    -0.000000
+      py      :    -0.000000
+      dz2     :     0.000023  d :     0.000023
+      dxz     :     0.000000
+      dyz     :     0.000000
+      dx2y2   :     0.000000
+      dxy     :     0.000000
+  5 H s       :     0.000220  s :     0.000220
+      pz      :     0.002652  p :     0.002652
+      px      :     0.000000
+      py      :     0.000000
+  6 H s       :     0.000219  s :     0.000219
+      pz      :     0.002652  p :     0.002652
+      px      :     0.000000
+      py      :     0.000000
+  7 H s       :     0.000219  s :     0.000219
+      pz      :     0.002652  p :     0.002652
+      px      :     0.000000
+      py      :     0.000000
+
+
+                     *******************************
+                     * LOEWDIN POPULATION ANALYSIS *
+                     *******************************
+
+-----------------------------------------
+LOEWDIN ATOMIC CHARGES AND SPIN DENSITIES
+-----------------------------------------
+   0 C :   -0.036097    0.469566
+   1 H :    0.012046    0.010143
+   2 H :    0.012026    0.010145
+   3 H :    0.012026    0.010145
+   4 C :   -0.036097    0.469566
+   5 H :    0.012046    0.010143
+   6 H :    0.012026    0.010145
+   7 H :    0.012026    0.010145
+
+--------------------------------------------------
+LOEWDIN REDUCED ORBITAL CHARGES AND SPIN DENSITIES
+--------------------------------------------------
+CHARGE
+  0 C s       :     2.939511  s :     2.939511
+      pz      :     0.939355  p :     3.055297
+      px      :     1.057961
+      py      :     1.057980
+      dz2     :     0.003449  d :     0.041289
+      dxz     :     0.000001
+      dyz     :     0.000001
+      dx2y2   :     0.018917
+      dxy     :     0.018922
+  1 H s       :     0.912180  s :     0.912180
+      pz      :     0.019661  p :     0.075774
+      px      :     0.045926
+      py      :     0.010187
+  2 H s       :     0.912190  s :     0.912190
+      pz      :     0.019666  p :     0.075785
+      px      :     0.019126
+      py      :     0.036993
+  3 H s       :     0.912190  s :     0.912190
+      pz      :     0.019666  p :     0.075785
+      px      :     0.019126
+      py      :     0.036993
+  4 C s       :     2.939511  s :     2.939511
+      pz      :     0.939355  p :     3.055297
+      px      :     1.057961
+      py      :     1.057980
+      dz2     :     0.003449  d :     0.041289
+      dxz     :     0.000001
+      dyz     :     0.000001
+      dx2y2   :     0.018917
+      dxy     :     0.018922
+  5 H s       :     0.912180  s :     0.912180
+      pz      :     0.019661  p :     0.075774
+      px      :     0.045926
+      py      :     0.010187
+  6 H s       :     0.912190  s :     0.912190
+      pz      :     0.019666  p :     0.075785
+      px      :     0.019126
+      py      :     0.036993
+  7 H s       :     0.912190  s :     0.912190
+      pz      :     0.019666  p :     0.075785
+      px      :     0.019126
+      py      :     0.036993
+
+SPIN
+  0 C s       :     0.000323  s :     0.000323
+      pz      :     0.469217  p :     0.469217
+      px      :     0.000000
+      py      :     0.000000
+      dz2     :     0.000027  d :     0.000027
+      dxz     :     0.000000
+      dyz     :     0.000000
+      dx2y2   :     0.000000
+      dxy     :     0.000000
+  1 H s       :     0.000210  s :     0.000210
+      pz      :     0.009922  p :     0.009933
+      px      :     0.000012
+      py      :     0.000000
+  2 H s       :     0.000210  s :     0.000210
+      pz      :     0.009924  p :     0.009936
+      px      :     0.000003
+      py      :     0.000009
+  3 H s       :     0.000210  s :     0.000210
+      pz      :     0.009924  p :     0.009936
+      px      :     0.000003
+      py      :     0.000009
+  4 C s       :     0.000323  s :     0.000323
+      pz      :     0.469217  p :     0.469217
+      px      :     0.000000
+      py      :    -0.000000
+      dz2     :     0.000027  d :     0.000027
+      dxz     :     0.000000
+      dyz     :    -0.000000
+      dx2y2   :     0.000000
+      dxy     :    -0.000000
+  5 H s       :     0.000210  s :     0.000210
+      pz      :     0.009922  p :     0.009933
+      px      :     0.000012
+      py      :    -0.000000
+  6 H s       :     0.000210  s :     0.000210
+      pz      :     0.009924  p :     0.009936
+      px      :     0.000003
+      py      :     0.000009
+  7 H s       :     0.000210  s :     0.000210
+      pz      :     0.009924  p :     0.009936
+      px      :     0.000003
+      py      :     0.000009
+
+
+                      *****************************
+                      * MAYER POPULATION ANALYSIS *
+                      *****************************
+
+  NA   - Mulliken gross atomic population
+  ZA   - Total nuclear charge
+  QA   - Mulliken gross atomic charge
+  VA   - Mayer's total valence
+  BVA  - Mayer's bonded valence
+  FA   - Mayer's free valence
+
+  ATOM       NA         ZA         QA         VA         BVA        FA
+  0 C      6.2043     6.0000    -0.2043     3.9523     2.9895     0.9628
+  1 H      0.9319     1.0000     0.0681     0.9834     0.9791     0.0043
+  2 H      0.9319     1.0000     0.0681     0.9834     0.9791     0.0043
+  3 H      0.9319     1.0000     0.0681     0.9834     0.9791     0.0043
+  4 C      6.2043     6.0000    -0.2043     3.9523     2.9895     0.9628
+  5 H      0.9319     1.0000     0.0681     0.9834     0.9791     0.0043
+  6 H      0.9319     1.0000     0.0681     0.9834     0.9791     0.0043
+  7 H      0.9319     1.0000     0.0681     0.9834     0.9791     0.0043
+
+  Mayer bond orders larger than 0.100000
+B(  0-C ,  1-H ) :   0.9910 B(  0-C ,  2-H ) :   0.9910 B(  0-C ,  3-H ) :   0.9910 
+B(  4-C ,  5-H ) :   0.9910 B(  4-C ,  6-H ) :   0.9910 B(  4-C ,  7-H ) :   0.9910 
+
+
+
+----------------------------------------------------------------
+                           < CASPT2  >                          
+----------------------------------------------------------------
+
+SYSTEM-SPECIFIC SETTINGS:
+Number of active electrons          ...    2
+Number of active orbitals           ...    6
+Total number of electrons           ...   18
+Total number of orbitals            ...   58
+
+Determined orbital ranges:
+   Internal       0 -    7 (   8 orbitals)
+   Active         8 -   13 (   6 orbitals)
+   External      14 -   57 (  44 orbitals)
+  Last  frozen  orbital             ... 1
+  First deleted orbital             ... 58
+Number of multiplicity blocks       ...    2
+BLOCK  0 WEIGHT=   0.5000
+  Multiplicity                      ...    3
+  #(Configurations)                 ...   15
+  #(CSFs)                           ...   15
+  #(Roots)                          ...    1
+  PrintLevel                        ...    1
+
+BLOCK  1 WEIGHT=   0.5000
+  Multiplicity                      ...    1
+  #(Configurations)                 ...   21
+  #(CSFs)                           ...   21
+  #(Roots)                          ...    1
+  PrintLevel                        ...    1
+
+INTEGRAL-TRANSFORMATION-STEP:
+  Algorithm                         ... EXACT
+
+PT2-SETTINGS:
+  CASPT2 Real Levelshift            ...  0.00e+00
+  CASPT2 Im.  Levelshift            ...  0.00e+00
+  CASPT2 IPEA Levelshift            ...  0.00e+00
+ CI step strategy                   ... General CI
+  D4C handling                      ... PS approximation (factorized) 
+  CI truncation for D4C at          ...  1.00e-12
+  CI truncation for D3  at          ...  1.00e-14
+  NThresh (linear dependencies)     ...  1.00e-06
+  Orbitals                          ... canonical for each state 
+  MaxDIIS                           ... 7
+  MaxIter                           ... 50
+  PrintLevel                        ... 1 
+
+ --------------------
+  MULT 3, ROOT 0 
+ --------------------
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+
+     D1, D2 Build      ... done in        0.0 sec
+     D3 Build          ... CI space truncated: 15 -> 8 CFGs 
+                       ... RI space truncated: 15 -> 15 CFGs 
+                       ... 
+                       ... correcting norm (1.000000e+00) 
+                       ... done in        0.0 sec
+     Hole densities    ... done in        0.0 sec
+     Calc Fock         ... done in        0.0 sec
+ CASPT2 intermediates avoiding 4-th order density matrix   ...
+
+     Class VIJAB       ... done in        0.0 sec
+     Class ITAB        ... Skipped =     46464 of        69696 LowestEV= 7.709158e-02 ... done in        0.0 sec 
+     Class TUAB        ...  ERROR! All eigenvalues are <= 0 !!
+Skipped =     67760 of        69696 LowestEV=-2.289530e-20 ... done in        0.0 sec 
+     Class IJTA        ... Skipped =         0 of         9504 LowestEV=-1.269669e-01 ... done in        0.0 sec 
+     Class IJTU        ... Skipped =        63 of          756 LowestEV=-2.076700e-01 ... done in        0.0 sec 
+     Class ITUA/ITAU   ... Skipped =     13464 of        19008 LowestEV=-5.063202e-02 ... done in        0.0 sec 
+     Class TUVA        ... CI space truncated: 15 -> 8 CFGs 
+                       ... RI space truncated: 15 -> 15 CFGs 
+                       ... 
+                       ... correcting norm (1.000000e+00) 
+                       ... Skipped =      9240 of         9504 LowestEV= 7.254246e-02 ... done in        0.0 sec 
+     Class ITUV        ... CI space truncated: 15 -> 8 CFGs 
+                       ... RI space truncated: 15 -> 15 CFGs 
+                       ... 
+                       ... correcting norm (1.000000e+00) 
+                       ... Skipped =       162 of         1296 LowestEV=-1.379976e-01 ... done in        0.0 sec 
+
+-----------------------------------
+ CASPT2-D Energy =     -0.271594677
+-----------------------------------
+
+Class V0_ijab: dE=     -0.151940314
+Class Vm1_iab: dE=     -0.035294348
+Class Vm2_ab : dE=     -0.000096177
+Class V1_ija : dE=     -0.039825365
+Class V2_ij  : dE=     -0.004027385
+Class V0_ia  : dE=     -0.034907726
+Class Vm1_a  : dE=     -0.000024487
+Class V1_i   : dE=     -0.005478875
+
+
+smallest energy denominator IJAB =      1.587291114
+smallest energy denominator ITAB =      1.098344151
+smallest energy denominator IJTA =      1.232717194
+smallest energy denominator TUAB =      0.656991012
+smallest energy denominator IJTU =      0.924407055
+smallest energy denominator ITAU =      0.743013534
+smallest energy denominator TUVA =      0.300149475
+smallest energy denominator ITUV =      0.428040912
+
+ Iter           EPT2     EHylleraas  residual norm    Time
+    1    -0.27159468    -0.26838589     0.04451088     0.0
+    2    -0.26838589    -0.26916339     0.00649447     0.0
+    3    -0.26916424    -0.26918201     0.00101339     0.0
+    4    -0.26918049    -0.26918252     0.00013538     0.0
+    5    -0.26918246    -0.26918253     0.00002174     0.0
+    6    -0.26918255    -0.26918253     0.00000279     0.0
+    7    -0.26918253    -0.26918253     0.00000046     0.0
+
+ CASPT2 calculation converged in 7 iterations 
+
+
+ Reference Weight =      0.915007630
+
+ --------------------
+  MULT 1, ROOT 0 
+ --------------------
+   --- Canonicalize Internal Space
+   --- Canonicalize External Space
+
+     D1, D2 Build      ... done in        0.0 sec
+     D3 Build          ... CI space truncated: 21 -> 12 CFGs 
+                       ... RI space truncated: 21 -> 21 CFGs 
+                       ... 
+                       ... correcting norm (1.000000e+00) 
+                       ... Printing Progress: # ~ 5%
+                       ... ####################
+                       ... ####################
+                       ... done in        0.0 sec
+     Hole densities    ... done in        0.0 sec
+     Calc Fock         ... done in        0.0 sec
+ CASPT2 intermediates avoiding 4-th order density matrix   ...
+
+     Class VIJAB       ... done in        0.0 sec
+     Class ITAB        ... Skipped =     23232 of        69696 LowestEV= 7.629187e-02 ... done in        0.0 sec 
+     Class TUAB        ...  ERROR! All eigenvalues are <= 0 !!
+Skipped =     67760 of        69696 LowestEV= 2.267420e-01 ... done in        0.0 sec 
+     Class IJTA        ... Skipped =         0 of         9504 LowestEV=-1.272572e-01 ... done in        0.0 sec 
+     Class IJTU        ... Skipped =         0 of          756 LowestEV=-1.984013e-01 ... done in        0.0 sec 
+     Class ITUA/ITAU   ... Skipped =      9504 of        19008 LowestEV=-7.416035e-02 ... done in        0.0 sec 
+     Class TUVA        ... CI space truncated: 21 -> 12 CFGs 
+                       ... RI space truncated: 21 -> 21 CFGs 
+                       ... 
+                       ... correcting norm (1.000000e+00) 
+                       ... Skipped =      9240 of         9504 LowestEV= 7.629082e-02 ... done in        0.0 sec 
+     Class ITUV        ... CI space truncated: 21 -> 12 CFGs 
+                       ... RI space truncated: 21 -> 21 CFGs 
+                       ... 
+                       ... correcting norm (1.000000e+00) 
+                       ... Skipped =       146 of         1296 LowestEV=-1.363756e-01 ... done in        0.0 sec 
+
+-----------------------------------
+ CASPT2-D Energy =     -0.272034629
+-----------------------------------
+
+Class V0_ijab: dE=     -0.151929281
+Class Vm1_iab: dE=     -0.034455479
+Class Vm2_ab : dE=     -0.000210682
+Class V1_ija : dE=     -0.039878193
+Class V2_ij  : dE=     -0.004142441
+Class V0_ia  : dE=     -0.035515771
+Class Vm1_a  : dE=     -0.000027091
+Class V1_i   : dE=     -0.005875691
+
+
+smallest energy denominator IJAB =      1.589815890
+smallest energy denominator ITAB =      1.098423612
+smallest energy denominator IJTA =      1.235334946
+smallest energy denominator TUAB =      0.681189581
+smallest energy denominator IJTU =      0.936966984
+smallest energy denominator ITAU =      0.720747597
+smallest energy denominator TUVA =      0.303514616
+smallest energy denominator ITUV =      0.431308551
+
+ Iter           EPT2     EHylleraas  residual norm    Time
+    1    -0.27203463    -0.26899359     0.04472218     0.0
+    2    -0.26899359    -0.26978331     0.00650737     0.0
+    3    -0.26978199    -0.26980212     0.00104139     0.0
+    4    -0.26980051    -0.26980266     0.00013955     0.0
+    5    -0.26980260    -0.26980267     0.00002222     0.0
+    6    -0.26980269    -0.26980267     0.00000287     0.0
+    7    -0.26980267    -0.26980267     0.00000049     0.0
+
+ CASPT2 calculation converged in 7 iterations 
+
+
+ Reference Weight =      0.914129723
+
+ ===============================================================
+                       CASPT2 Results  
+ ===============================================================
+   *********************
+    MULT 3, ROOT 0 
+   *********************
+
+  Class V0_ijab :	 dE = -0.151686952165 
+  Class Vm1_iab :	 dE = -0.034475338173 
+  Class Vm2_ab  :	 dE = -0.000095525557 
+  Class V1_ija  :	 dE = -0.039491490135 
+  Class V2_ij   :	 dE = -0.003988139839 
+  Class V0_ia   :	 dE = -0.034075231662 
+  Class Vm1_a   :	 dE = -0.000024713603 
+  Class V1_i    :	 dE = -0.005345139816 
+
+ --------------------------------------------------------------- 
+ 	 Total Energy Correction : dE = -0.26918253095022
+ --------------------------------------------------------------- 
+ 	 Reference  Energy       : E0 = -79.05556556881342
+ 	 Reference Weight        : W0 = 0.91500762973244
+ --------------------------------------------------------------- 
+ 	 Total Energy (E0+dE)    : E  = -79.32474809976364
+ --------------------------------------------------------------- 
+
+   *********************
+    MULT 1, ROOT 0 
+   *********************
+
+  Class V0_ijab :	 dE = -0.151686832771 
+  Class Vm1_iab :	 dE = -0.033693900031 
+  Class Vm2_ab  :	 dE = -0.000209148291 
+  Class V1_ija  :	 dE = -0.039557390305 
+  Class V2_ij   :	 dE = -0.004106405395 
+  Class V0_ia   :	 dE = -0.034765879646 
+  Class Vm1_a   :	 dE = -0.000026348917 
+  Class V1_i    :	 dE = -0.005756766442 
+
+ --------------------------------------------------------------- 
+ 	 Total Energy Correction : dE = -0.26980267179883
+ --------------------------------------------------------------- 
+ 	 Reference  Energy       : E0 = -79.06015437376981
+ 	 Reference Weight        : W0 = 0.91412972321840
+ --------------------------------------------------------------- 
+ 	 Total Energy (E0+dE)    : E  = -79.32995704556863
+ --------------------------------------------------------------- 
+
+-----------------------
+ CASPT2 TOTAL ENERGIES
+-----------------------
+# This can be used as input for the MRCI SOC block to replace
+# the diagonal energies within the QDPT treatment. 
+# Note that multiplicty blocks must be ordered in decending order e.g. mult 5,3,1! 
+
+STATE   ROOT MULT  Energy/a.u.   MRCI SOC BLOCK INPUT (Eh)
+   0:    0    3  -79.324748    EDIAG[0]    -79.324748100
+   1:    0    1  -79.329957    EDIAG[1]    -79.329957046
+
+-----------------------------
+ CASPT2 TRANSITION ENERGIES
+------------------------------
+
+LOWEST ROOT (ROOT 0, MULT 1) =    -79.329957046 Eh -2158.678 eV
+
+STATE ROOT MULT  DE/a.u.     DE/eV    DE/cm**-1
+   1:   0    3   0.005209     0.142   1143.2
+
+--------------------------------------------
+ CASPT2 CORRECTION TO THE TRANSITION ENERGY
+--------------------------------------------
+STATE  ROOT MULT DE/a.u. DE/eV 	DE/cm**-1
+   1:    0    3   0.000620      0.017    136.1
+
+
+--------------
+TIMINGS CASPT2
+--------------
+
+Sum of individual times        ...        1.3 sec (100.0%)
+
+   Integraltransformation      ...        0.8 sec ( 58.8%)
+   Building Fock and alike     ...        0.1 sec (  6.0%)
+   Building D2,D1              ...        0.0 sec (  0.0%)
+   Building D3                 ...        0.0 sec (  0.0%)
+   Building D4                 ...        0.0 sec (  0.1%)
+   All densities               ...        0.0 sec (  0.2%)
+   Hole Densities              ...        0.0 sec (  0.0%)
+   Re-Canonicalization         ...        0.1 sec (  7.4%)
+   Iterations                  ...        0.3 sec ( 24.6%)
+   Classes Vijab               ...        0.0 sec (  0.0%)
+   Class Viab                  ...        0.0 sec (  0.2%)
+   Class Vab                   ...        0.0 sec (  0.1%)
+   Class Vija                  ...        0.0 sec (  0.1%)
+   Class Vij                   ...        0.0 sec (  0.1%)
+   Class Via                   ...        0.0 sec (  0.2%)
+   Class Va                    ...        0.0 sec (  1.4%)
+   Class Vi                    ...        0.0 sec (  0.8%)
+   All Classes                 ...        0.4 sec ( 27.6%)
+
+-------------------------------------------------------------
+ Forming the transition densities       ... done in 0.0 sec
+-------------------------------------------------------------
+
+--------------
+CASSCF TIMINGS
+--------------
+
+Total time                       ...        9.1 sec
+Sum of individual times          ...        9.0 sec ( 98.8%)
+
+Calculation of AO operators
+   F(Core) operator              ...        1.6 sec ( 17.2%)
+   G(Act) operator               ...        1.6 sec ( 17.2%)
+Calculation of MO transformed quantities
+   J(MO) operators               ...        4.4 sec ( 48.4%)
+   AO->MO one electron integrals ...        0.0 sec (  0.1%)
+Configuration interaction steps
+   CI-setup phase                ...        0.0 sec (  0.1%)
+   CI-solution phase             ...        0.1 sec (  0.6%)
+   Generation of densities       ...        0.0 sec (  0.0%)
+Orbital improvement steps
+   Orbital gradient              ...        0.0 sec (  0.1%)
+   O(1) converger                ...        0.0 sec (  0.2%)
+CPCM steps
+   Total CPCM time               ...        0.0 sec (  0.1%)
+PT2 
+   CASPT2 time                   ...        1.4 sec ( 14.8%)
+Properties                       ...        0.0 sec (  0.0%)
+   SOC integral calculation      ...        0.0 sec (  0.0%)
+   SSC RMEs (incl. integrals)    ...        0.0 sec (  0.0%)
+   SOC RMEs                      ...        0.0 sec (  0.0%)
+
+Maximum memory used throughout the entire CASSCF-calculation: 40.7 MB
+
+------------------------------------------------------------------------------
+                         ORCA PROPERTY INTEGRAL CALCULATIONS
+------------------------------------------------------------------------------
+
+GBWName                                   ... caspt2.gbw
+Number of atoms                           ...      8
+Number of basis functions                 ...     58
+Max core memory                           ...   4096 MB
+
+Dipole integrals                          ... YES
+Quadrupole integrals                      ...  NO
+Linear momentum integrals                 ...  NO
+Angular momentum integrals                ... YES
+Higher moments length integrals           ...  NO
+Higher moments velocity integrals         ...  NO
+Kinetic energy integrals                  ...  NO
+GIAO right hand sides                     ...  NO
+GIAO dipole derivative integrals          ...  NO
+SOC integrals                             ...  NO
+EPR diamagnetic integrals (GIAO)          ...  NO
+EPR gauge integrals                       ...  NO
+Field gradient integrals                  ...  NO (   0 nuclei)
+Spin-dipole/Fermi contact integrals       ...  NO (   0 nuclei)
+Contact density integrals                 ...  NO (   0 nuclei)
+Nucleus-orbit integrals                   ...  NO (   0 nuclei)
+Geometric perturbations                   ...  NO (   8 nuclei)
+
+Choice of electric origin   ... Center of mass
+Position of electric origin ... (  0.0000, -0.0000,  0.0000) 
+Choice of magnetic origin   ... GIAO
+Position of magnetic origin ... (  0.0000,  0.0000,  0.0000) 
+
+Calculating integrals                     ... Electric Dipole (Length)     done (  0.0 sec)
+Calculating integrals                     ... Angular Momentum  (ElOri)    done (  0.0 sec)
+
+Property integrals calculated in   0.0 sec
+
+Maximum memory used throughout the entire PROPINT-calculation: 4.3 MB
+-------------------------------------------------------------------------------
+                              ORCA-CASSCF
+-------------------------------------------------------------------------------
+
+Setting up the integral package     ... SharkInputFile = caspt2.SHARKINP.tmpdone
+
+PROPERTIES-SETTINGS:
+  QDPT diagonal energies            ... CASPT2 energies 
+
+
+==========================================
+CASSCF UV, CD spectra and dipole moments
+==========================================
+
+
+=====================================================================
+CASSCF (CASPT2 diagonal energies) UV, CD spectra and dipole moments
+=====================================================================
+
+--------------
+CASSCF TIMINGS
+--------------
+
+Total time                       ...        0.0 sec
+Sum of individual times          ...        0.0 sec ( 91.9%)
+
+Calculation of AO operators
+Calculation of MO transformed quantities
+Configuration interaction steps
+   CI-setup phase                ...        0.0 sec ( 91.9%)
+Orbital improvement steps
+
+Maximum memory used throughout the entire CASSCF-calculation: 26.1 MB
+
+-------------------------   --------------------
+FINAL SINGLE POINT ENERGY       -79.327352572666
+-------------------------   --------------------
+
+
+------------------------------------------------------------------------------
+                              ORCA PROPERTY CALCULATIONS
+------------------------------------------------------------------------------
+
+GBWName                                 ... caspt2.gbw
+Number of atoms                         ...      8
+Number of basis functions               ...     58
+Max core memory                         ...   4096 MB
+
+Electric properties:
+Dipole moment                           ... YES
+Quadrupole moment                       ...  NO
+Static polarizability (Dipole/Dipole)   ...  NO
+Static polarizability (Dipole/Quad.)    ...  NO
+Static polarizability (Quad./Quad.)     ...  NO
+Static polarizability (Velocity)        ...  NO
+Static hyperpolarizability              ...  NO
+
+Atomic electric properties:
+Dipole moment                           ...  NO
+Quadrupole moment                       ...  NO
+Static polarizability                   ...  NO
+
+Choice of electric origin               ... Center of mass
+Position of electric origin             ...     0.000000    -0.000000     0.000000
+
+General magnetic properties:
+Magnetizability                         ...  NO
+
+EPR properties:
+g-Tensor (aka g-matrix)                 ...  NO
+Zero-Field splitting spin-orbit         ...  NO
+Zero-field splitting spin-spin          ...  NO
+Hyperfine couplings                     ...  NO (   0 nuclei)
+Quadrupole couplings                    ...  NO (   0 nuclei)
+Contact density                         ...  NO (   0 nuclei)
+
+NMR properties:
+Chemical shifts                         ...  NO (   0 nuclei)
+Spin-rotation constants                 ...  NO (   0 nuclei)
+Spin-spin couplings                     ...  NO (   0 nuclei,    0 pairs)
+
+Choice of magnetic origin               ... GIAO
+Position of magnetic origin             ...     0.000000     0.000000     0.000000
+
+Properties with geometric perturbations:
+SCF Hessian                             ...  NO
+IR spectrum                             ...  NO
+VCD spectrum                            ...  NO
+X-ray spectroscopy properties:
+SCF XES/XAS/RIXS spectra                ...  NO
+
+SCF SOC stabilization energy            ...  NO
+Diagonal Born-Oppenheimer correction    ...  NO
+
+-------------
+DIPOLE MOMENT
+-------------
+
+Method             : CASSCF/ALL STATES AVERAGE
+Type of density    : Electron Density
+Level              : Unrelaxed density
+State              :  -1
+Multiplicity       :  -1
+Irrep              :   0
+Energy             :   -79.0578599712916059 Eh
+Basis              : AO
+                                X                 Y                 Z
+Electronic contribution:     -0.000020367      -0.000000000       0.000000537
+Nuclear contribution   :      0.000000000       0.000000000       0.000000000
+                        -----------------------------------------
+Total Dipole Moment    :     -0.000020367      -0.000000000       0.000000537
+                        -----------------------------------------
+Magnitude (a.u.)       :      0.000020374
+Magnitude (Debye)      :      0.000051788
+
+
+
+--------------------
+Rotational spectrum 
+--------------------
+ 
+Rotational constants in cm-1:             2.378825             0.176275             0.176274 
+Rotational constants in MHz :         71315.383142          5284.602327          5284.572042 
+
+Dipole components along the rotational axes: 
+x,y,z [a.u.] :     0.000001     0.000020     0.000000 
+x,y,z [Debye]:     0.000001     0.000052     0.000000 
+
+ 
+
+Dipole moment calculation done in   0.0 sec 
+
+Maximum memory used throughout the entire PROP-calculation: 2.1 MB
+
+--------------------------------
+SUGGESTED CITATIONS FOR THIS RUN
+--------------------------------
+
+Below you find a list of papers that are relevant to this ORCA run
+We neither can nor want to force you to cite these papers, but we appreciate if you do
+You receive ORCA, which is the product of decades of hard work by many enthusiastic individuals, for free
+The only thing we kindly ask in return is that you cite our papers,
+We deeply appreciate it, if you show your appreciation for ORCA by not just citing the generic ORCA reference.
+
+Please note that relegating all ORCA citations to the supporting information does *not* help us.
+SI sections are not indexed - citations you put there will not count into any citation statistics
+But we need these citations in order to attract the funding resources that allow us to do what we are doing
+
+Therefore, if you are a happy ORCA user, please consider citing a few of the papers listed below in the main body of your paper
+
+In addition to the list printed below, the program has created the file caspt2.bibtex that contains the list in bibtex format
+You can import this file easily into all common literature databanks and citation aid programs
+
+
+List of essential papers. We consider these as the minimum necessary citations
+
+  1. Neese, F.
+     Software update: the ORCA program system, version 6.0
+     WIRES Comput. Molec. Sci. 2025 15(1), e70019
+     doi.org/10.1002/wcms.7019
+
+List of papers to cite with high priority. The work reported in these papers was absolutely
+necessary for this run to complete.
+Our perspective: the developers of density functionals and basis sets usually get cited in chemistry papers
+Good! But without the algorithms to do something with them, the functionals or basis sets would not do anything.
+Hence, in our opinion, the algorithm design and method developments papers are equally worthy of getting cited
+
+  1. Kollmar, C.; Sivalingam, K.; Helmich-Paris, B.; Angeli, C.; Neese, F.
+     A perturbation-based super-CI approach for the orbital optimization of a CASSCF wave function
+     J. Comput. Chem. 2019 40 , 1463-1470
+     doi.org/10.1002/jcc.25801
+  2. Kollmar, C.; Sivalingam, K.; Guo, Y.; Neese, F.
+     An efficient implementation of the NEVPT2 and CASPT2 methods avoiding higher-order density matrices
+     J. Chem. Phys. 2021 155(23), 234104
+     doi.org/10.1063/5.0072129
+  3. Neese, F.
+     The SHARK Integral Generation and Digestion System
+     J. Comp. Chem. 2022 44(3), 381
+     doi.org/10.1002/jcc.26942
+  4. Ugandi, M.; Roemelt, M.
+     A recursive formulation of one-electron coupling coefficients for spin-adapted configuration interaction calculations featuring many unpaired electrons
+     Int. J. Quantum Chem. 2023 123 , e27045
+     doi.org/10.1002/qua.27045
+
+List of suggested additional citations. These are papers that are important in the 'surrounding' of 
+of this run, or papers that preceded the highly important papers. If you like your results we are grateful for a citation.
+
+  1. Neese, F.
+     The ORCA program system
+     WIRES Comput. Molec. Sci. 2012 2(1), 73-78
+     doi.org/10.1002/wcms.81
+  2. Neese, F.
+     Software update: the ORCA program system, version 4.0
+     WIRES Comput. Molec. Sci. 2018 8(1), 1-6
+     doi.org/10.1002/wcms.1327
+  3. Kollmar, C.; Sivalingam, K.; Neese, F.
+     An alternative choice of the zeroth-order Hamiltonian in CASPT2 theory
+     J. Chem. Phys. 2020 152(21), 214110
+     doi.org/10.1063/5.0010019
+  4. Neese, F.; Wennmohs, F.; Becker, U.; Riplinger, C.
+     The ORCA quantum chemistry program package
+     J. Chem. Phys. 2020 152(22), 224108
+     doi.org/10.1063/5.0004608
+  5. Neese, F.
+     Software update: The ORCA program system—Version 5.0
+     WIRES Comput. Molec. Sci. 2022 12(1), e1606
+     doi.org/10.1002/wcms.1606
+
+List of optional additional citations
+
+  1. Neese, F.
+     Approximate second-order SCF convergence for spin unrestricted wavefunctions
+     Chem. Phys. Lett. 2000 325(1-3), 93-98
+     doi.org/10.1016/s0009-2614(00)00662-x
+
+Timings for individual modules:
+
+Sum of individual times          ...        9.432 sec (=   0.157 min)
+Startup calculation              ...        0.127 sec (=   0.002 min)   1.3 %
+SCF iterations                   ...        0.032 sec (=   0.001 min)   0.3 %
+CASSCF iterations                ...        9.204 sec (=   0.153 min)  97.6 %
+Property integrals               ...        0.034 sec (=   0.001 min)   0.4 %
+Property calculations            ...        0.036 sec (=   0.001 min)   0.4 %
+                             ****ORCA TERMINATED NORMALLY****
+TOTAL RUN TIME: 0 days 0 hours 0 minutes 9 seconds 532 msec

@@ -1,0 +1,26 @@
+! def2-SVP TightSCF
+! CASSCF
+! MORead
+! LargePrint   
+%moinp "d3h.gbw"
+
+%casscf
+  nel 2
+  norb 2
+  mult 1,3
+  nroots 1,1
+  # OrbPrint borrado porque ya no existe ahí
+  PTMethod FIC_CASPT2
+end
+
+* xyz 0 3
+C   0.00000   0.00000  -2.25000
+H   1.08250   0.00000  -2.25000
+H  -0.54125   0.93740  -2.25000
+H  -0.54125  -0.93740  -2.25000
+
+C   0.00000   0.00000   2.25000
+H   1.08250   0.00000   2.25000
+H  -0.54125   0.93740   2.25000
+H  -0.54125  -0.93740   2.25000
+*

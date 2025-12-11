@@ -1,0 +1,22 @@
+! UKS B3LYP def2-SVP TightSCF SP
+! NoUseSym
+
+%scf
+  MaxIter 300
+  FlipSpin 0       # flip spin on one radical center (atom index 0 = first C)
+  FinalMs 0.0      # target M_S = 0 (BS state)
+end
+
+%moinp "d3h.gbw"   # name of your previous HS gbw
+
+* xyz 0 3
+C   0.00000   0.00000  -2.25000
+H   1.08250   0.00000  -2.25000
+H  -0.54125   0.93740  -2.25000
+H  -0.54125  -0.93740  -2.25000
+
+C   0.00000   0.00000   2.25000
+H   1.08250   0.00000   2.25000
+H  -0.54125   0.93740   2.25000
+H  -0.54125  -0.93740   2.25000
+*
